@@ -7,13 +7,37 @@
 </head>
 <body>
 	<div id="family">
-		<h1>Create Your Family</h1>
+		<h1>Create Your Family</h1><br>
 		<button onClick="addMember()">Add a family member</button><br>
 		<button onClick="startGame()">Start</button>
 		<br><br>
 		<div class="member">
 			Name: <input/>
 			<button onClick="removeMember(this)">Remove</button>
+		</div>
+	</div>
+	<div id="dwelling">
+		<h1>Choose your dwelling</h1><br>
+		<div class="dwelling" id="house" onClick="chooseDwelling('house')">
+			<h2>House</h2>
+			<ul>
+				<li>$300 down</li>
+				<li>$12 per cycle for 10 cycles</li>
+				<li>Yours to keep afterwards</li>
+				<li>No crowded quarters</li>
+			</ul>
+		</div>
+		<div class="dwelling" id="rent" onClick="chooseDwelling('rent')">
+			<h2>Rent</h2>
+			<ul>
+				<li>$9 per cycle forever</li>
+			</ul>
+		</div>
+		<div class="dwelling" id="homeless" onClick="chooseDwelling('homeless')">
+			<h2>Homeless</h2>
+			<ul>
+				<li>Free forever!</li>
+			</ul>
 		</div>
 	</div>
 </body>

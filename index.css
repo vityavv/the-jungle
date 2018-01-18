@@ -1,0 +1,14 @@
+h1, h2 {
+	margin: 0;
+}
+.dwelling {
+	display: inline-block;
+	vertical-align: top;
+	border: 2px solid black;
+	padding: 5px;
+	height: 200px;
+	width: 200px;
+}
+.dwelling:hover {
+	border: 2px solid lime;
+}
