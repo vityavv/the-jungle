@@ -1,6 +1,9 @@
 h1, h2 {
 	margin: 0;
 }
+.hidden {
+	display: none;
+}
 .dwelling {
 	display: inline-block;
 	vertical-align: top;

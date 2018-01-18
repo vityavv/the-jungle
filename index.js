@@ -21,6 +21,8 @@ function startGame() {//Start the game
 	memberElements.forEach(memberElement => {
 		members.push(new Person(memberElement.value));//for each element, make a new person with their name
 	});
+	document.getElementById("dwelling").style.display = "block";
+	document.getElementById("family").style.display = "none";//hide the family menu and show the house one
 }
 
 function Person(name) {//Constructor for making a new person
