@@ -18,6 +18,10 @@ h1, h2 {
 	padding: 5px;
 }
 
+.job {
+	background-color: lightcyan;
+}
+
 #status {
 	width: 500px;
 	height: 400px;
