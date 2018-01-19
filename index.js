@@ -2,6 +2,8 @@
 let members = [];
 let money = 700;
 let cycle = 0;
+let dwelling = "homeless";
+let house = 0;
 //Concerning the family
 function removeMember(button) {//Remove a member of the family
 	button.parentNode.remove();
@@ -24,9 +26,27 @@ function startGame() {//Start the game
 	document.getElementById("dwelling").style.display = "block";
 	document.getElementById("family").style.display = "none";//hide the family menu and show the house one
 }
-
 function Person(name) {//Constructor for making a new person
 	this.job = 0;
 	this.alcoholic = false;
 	this.name = name;
+}
+//Choosing a house
+function chooseDwelling(chosenDwelling) {
+	if (chosenDwelling === "house") {
+		if (money >= 300) {
+			dwelling = "house";
+			house = 10;
+			money -= 300;
+		} else {
+			alert("You don't have enough money for that!");
+			return;
+		}
+	} else if (chosenDwelling === "rent") {
+		dwelling = "rent";
+		house = 0;
+	} else {
+		dwelling = "homeless";
+		house = 0;
+	}
 }
