@@ -1,3 +1,7 @@
+//GOOGLE COUNT: 1
+//DISCORD COUNT: 0
+//SO COUNT: 0
+
 //VARS
 let members = [];
 let money = 700;
@@ -53,5 +57,41 @@ function chooseDwelling(chosenDwelling) {
 	document.getElementById("job").style.display = "block";
 	document.getElementById("dwelling").style.display = "none";
 	document.getElementById("jobChooser").innerText = members[jobChooser].name;
+}
+function chooseJob(element, skip) {
+	if (skip) return;
+
+	Array.from(document.getElementsByClassName("job")).forEach(el => {el.style.visibility = "hidden"});
+	element.style.visibility = "visible";
+	element.style.background = "white";
+
+	let job = [0, 3, 5][Math.floor(Math.random()*3)];
+	if (job === 0) element.innerHTML = "<h1>You didn't get a job :(</h1><br>";
+	else element.innerHTML = `<h1>You got a job that pays $${job}!</h1><br><span id="bribe"><button onClick="bribe()">Bribe the boss for double pay - $20</button></span><br><br>`;
+	element.innerHTML += "<button onClick='nextChoose(this)'>Next</button>";
+	element.removeAttribute("onClick");
+
+	members[jobChooser].job = job;
+}
+function bribe() {
+	if (money < 20) {
+		alert("You don't have enough money!");
+		return;
+	}
+	members[jobChooser].job *= 2;
+	document.getElementById("bribe").innerHTML = `Your job now earns you $${members[jobChooser].job}!`;
+}
+function nextChoose(element) {
+	jobChooser++;
+	if (!members[jobChooser]) {
+		//TODO: go to game
+		return;
+	}
+	document.getElementById("jobChooser").innerText = members[jobChooser].name;
+	Array.from(document.getElementsByClassName("job")).forEach(el => {el.style.visibility = "visible"});
+	let parent = element.parentNode;
+	parent.style.background = "lightcyan";
+	setTimeout(()=>{parent.setAttribute("onClick", "chooseJob(this)")}, 100);//some things I don't like, and this is one of them
+	parent.innerHTML = "";
 }
 //Game functions:

@@ -10,14 +10,11 @@ h1, h2 {
 	border: 2px solid black;
 	height: 200px;
 	width: 200px;
+	padding: 5px;
 }
 .choose:hover {
 	border: 2px solid lime;
 }
-.dwelling {
-	padding: 5px;
-}
-
 .job {
 	background-color: lightcyan;
 }
