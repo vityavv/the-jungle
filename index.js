@@ -4,6 +4,7 @@ let money = 700;
 let cycle = 0;
 let dwelling = "homeless";
 let house = 0;
+let jobChooser = 0;
 //Concerning the family
 function removeMember(button) {//Remove a member of the family
 	button.parentNode.remove();
@@ -49,4 +50,8 @@ function chooseDwelling(chosenDwelling) {
 		dwelling = "homeless";
 		house = 0;
 	}
+	document.getElementById("job").style.display = "block";
+	document.getElementById("dwelling").style.display = "none";
+	document.getElementById("jobChooser").innerText = members[jobChooser].name;
 }
+//Game functions:

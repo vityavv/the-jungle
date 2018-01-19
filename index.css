@@ -4,14 +4,23 @@ h1, h2 {
 .hidden {
 	display: none;
 }
-.dwelling {
+.choose {
 	display: inline-block;
 	vertical-align: top;
 	border: 2px solid black;
-	padding: 5px;
 	height: 200px;
 	width: 200px;
 }
-.dwelling:hover {
+.choose:hover {
 	border: 2px solid lime;
+}
+.dwelling {
+	padding: 5px;
+}
+
+#status {
+	width: 500px;
+	height: 400px;
+	overflow-y: scroll;
+	border: 2px solid black;
 }

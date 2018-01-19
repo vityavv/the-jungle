@@ -19,7 +19,7 @@
 
 	<div id="dwelling" class="hidden">
 		<h1>Choose your dwelling</h1><br>
-		<div class="dwelling" id="house" onClick="chooseDwelling('house')">
+		<div class="dwelling choose" id="house" onClick="chooseDwelling('house')">
 			<h2>House</h2>
 			<ul>
 				<li>$300 down</li>
@@ -28,13 +28,13 @@
 				<li>No crowded quarters</li>
 			</ul>
 		</div>
-		<div class="dwelling" id="rent" onClick="chooseDwelling('rent')">
+		<div class="dwelling choose" id="rent" onClick="chooseDwelling('rent')">
 			<h2>Rent</h2>
 			<ul>
 				<li>$9 per cycle forever</li>
 			</ul>
 		</div>
-		<div class="dwelling" id="homeless" onClick="chooseDwelling('homeless')">
+		<div class="dwelling choose" id="homeless" onClick="chooseDwelling('homeless')">
 			<h2>Homeless</h2>
 			<ul>
 				<li>Free forever!</li>
@@ -42,5 +42,17 @@
 		</div>
 	</div>
 
+	<div id="job" class="hidden">
+		<h1>Try to get a job!</h1><br>
+		"<span id="jobChooser"></span>" is trying to get a job. <button onClick="chooseJob('nothing')">Skip</button><br><br>
+		<div class="choose" onClick="chooseJob()"></div>
+		<div class="choose" onClick="chooseJob()"></div>
+		<div class="choose" onClick="chooseJob()"></div>
+	</div>
+
+	<div id="game" class="hidden">
+		<div id="status">
+
+		</div>
 </body>
 </html>
