@@ -34,7 +34,7 @@ function startGame() {//Start the game
 function Person(name) {//Constructor for making a new person
 	this.job = 0;
 	this.alcoholic = false;
-	this.name = name;
+	this.name = name || "";//if there's no name (there shouldn't be, but just in case, and testing) it defaults to empty string
 }
 //Choosing a house
 function chooseDwelling(chosenDwelling) {
@@ -43,6 +43,7 @@ function chooseDwelling(chosenDwelling) {
 			dwelling = "house";
 			house = 10;//this is a counting-down number---when it reaches 0 you stop paying
 			money -= 300;
+			updateStatus(`You pay $300 down for a new house! You have $${money} left`);
 		} else {
 			alert("You don't have enough money for that!");//if you don't...
 			return;
@@ -66,8 +67,13 @@ function chooseJob(element, skip) {
 	element.style.background = "white";
 
 	let job = [0, 3, 5][Math.floor(Math.random()*3)];//see what job you get---completely random
-	if (job === 0) element.innerHTML = "<h1>You didn't get a job :(</h1><br>";//Here and below; show what job you got and your options
-	else element.innerHTML = `<h1>You got a job that pays $${job}!</h1><br><span id="bribe"><button onClick="bribe()">Bribe the boss for double pay - $20</button></span><br><br>`;
+	if (job === 0) {
+		element.innerHTML = "<h1>You didn't get a job :(</h1><br>";//Here and below; show what job you got and your options
+		updateStatus(`"${members[jobChooser].name}" tried to get a job and failed`);
+	} else {
+		element.innerHTML = `<h1>You got a job that pays $${job}!</h1><br><span id="bribe"><button onClick="bribe()">Bribe the boss for double pay - $20</button></span><br><br>`;
+		updateStatus(`"${members[jobChooser].name}" got a job that pays $${job}!`);
+	}
 	element.innerHTML += "<button onClick='nextChoose(this)'>Next</button>";
 	element.removeAttribute("onClick");//make sure that it doesn't change when you click on it by taking that away
 
@@ -81,11 +87,14 @@ function bribe() {
 	money -= 20;//take away money
 	members[jobChooser].job *= 2;//double pay
 	document.getElementById("bribe").innerHTML = `Your job now earns you $${members[jobChooser].job}!`;//tell 'em
+	updateStatus(`"${members[jobChooser].name}" bribed the boss $20 to get double pay and earn $${members[jobChooser].job}! You have $${money} left`);
 }
 function nextChoose(element) {
 	jobChooser++;//next jobChooser
 	if (!members[jobChooser]) {
-		//TODO: go to game
+		document.getElementById("job").style.display = "none";
+		document.getElementById("game").style.display = "block";
+		startCycle();
 		return;
 	}
 	document.getElementById("jobChooser").innerText = members[jobChooser].name;//show their name
@@ -98,11 +107,17 @@ function nextChoose(element) {
 //Game functions:
 
 function startCycle() {
+	members.filter(member => member.job).forEach(member => {
+		money += member.job;
+		updateStatus(`You earned $${member.job} from ${member.name}'s job. You now have $${money}.`);
+	});
 	if (house) {
 		if (money < 12) {
 			//TODO: You lose
 		}
+		console.log(money);
 		money -= 12;
+		console.log(money);
 		updateStatus(`You spent $12 to pay off your house. You have $${money} left.`);
 	}
 	if (dwelling === "rent") {
@@ -112,12 +127,12 @@ function startCycle() {
 		money -= 9;
 		updateStatus(`You spent $9 on rent. You have $${money} left.`);
 	}
-	money -= members.filter(member => member.alcoholic).forEach(member => {
+	members.filter(member => member.alcoholic).forEach(member => {
 		if (money < 1) {
 			//TODO: You lose
 		}
 		money--;
-		updateStatus(`You spent $1 on alcohol for ${member.name}. You have $${money} left.`);
+		updateStatus(`You spent $1 on alcohol for "${member.name}". You have $${money} left.`);
 	});
 	cycle++;
 	house--;
