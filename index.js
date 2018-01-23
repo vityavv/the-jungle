@@ -96,3 +96,33 @@ function nextChoose(element) {
 	parent.innerHTML = "";//take away the text
 }
 //Game functions:
+
+function startCycle() {
+	if (house) {
+		if (money < 12) {
+			//TODO: You lose
+		}
+		money -= 12;
+		updateStatus(`You spent $12 to pay off your house. You have $${money} left.`);
+	}
+	if (dwelling === "rent") {
+		if (money < 9) {
+			//TODO: You lose
+		}
+		money -= 9;
+		updateStatus(`You spent $9 on rent. You have $${money} left.`);
+	}
+	money -= members.filter(member => member.alcoholic).forEach(member => {
+		if (money < 1) {
+			//TODO: You lose
+		}
+		money--;
+		updateStatus(`You spent $1 on alcohol for ${member.name}. You have $${money} left.`);
+	});
+	cycle++;
+	house--;
+}
+function updateStatus(string) {
+	let status = document.getElementById("status");
+	status.innerHTML = `<p class="status">${string}</p><hr/>${status.innerHTML}`;
+}

@@ -11,17 +11,29 @@ h1, h2 {
 	height: 200px;
 	width: 200px;
 	padding: 5px;
+	margin: 5px;
+	background-color: lightcyan;
 }
 .choose:hover {
 	border: 2px solid lime;
 }
-.job {
-	background-color: lightcyan;
-}
 
-#status {
-	width: 500px;
-	height: 400px;
+.statuslikebox {
+	height: 450px;
 	overflow-y: scroll;
 	border: 2px solid black;
+	display: inline-block;
+}
+#statusbox {
+	width: 500px;
+}
+#statusbox > h1 {
+	padding: 5px;
+}
+#choosebox {
+	width: 700px;
+}
+.status {
+	padding: 5px;
+	margin: 0;
 }
