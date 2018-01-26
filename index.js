@@ -2,13 +2,17 @@
 //DISCORD COUNT: 0
 //SO COUNT: 0
 
+const cycleOne = ["Someone gets sick", "Someone loses their job", "You oversleep", "Nothing happens!", "turns into an alcoholic", "hands freze"];
+
 //VARS
 let members = [];
 let money = 700;
+window.onload = () => {updateStatus("You come into America with your family and $700");};
 let cycle = 0;
 let dwelling = "homeless";
 let house = 0;
 let jobChooser = 0;
+let cycleType = 0;//0 for first, 1 for second
 //Concerning the family
 function removeMember(button) {//Remove a member of the family
 	button.parentNode.remove();
@@ -74,7 +78,7 @@ function chooseJob(element, skip) {
 		element.innerHTML = `<h1>You got a job that pays $${job}!</h1><br><span id="bribe"><button onClick="bribe()">Bribe the boss for double pay - $20</button></span><br><br>`;
 		updateStatus(`"${members[jobChooser].name}" got a job that pays $${job}!`);
 	}
-	element.innerHTML += "<button onClick='nextChoose(this)'>Next</button>";
+	element.innerHTML += "<button onClick='nextJobChoose(this)'>Next</button>";
 	element.removeAttribute("onClick");//make sure that it doesn't change when you click on it by taking that away
 
 	members[jobChooser].job = job;//sets the job for real now
@@ -89,7 +93,7 @@ function bribe() {
 	document.getElementById("bribe").innerHTML = `Your job now earns you $${members[jobChooser].job}!`;//tell 'em
 	updateStatus(`"${members[jobChooser].name}" bribed the boss $20 to get double pay and earn $${members[jobChooser].job}! You have $${money} left`);
 }
-function nextChoose(element) {
+function nextJobChoose(element) {
 	jobChooser++;//next jobChooser
 	if (!members[jobChooser]) {
 		document.getElementById("job").style.display = "none";
@@ -136,6 +140,37 @@ function startCycle() {
 	});
 	cycle++;
 	house--;
+}
+function chooseCycle(element) {
+	Array.from(document.getElementsByClassName("cycle")).forEach(el => {el.style.visibility = "hidden"});
+	element.style.visibility = "visible";
+	element.style.background = "white";
+
+	let chosen = /*Math.floor(Math.random()*6)*/ 0;
+	if (!cycleType) {
+		cycleType = 1;
+		switch (chosen) {
+			case 0:
+				let member = Math.floor(Math.random()*members.length);
+				if (dwelling === "homeless") {
+					let string = `${members[member].name} got sick, and because your family is homeless their condition escalated and they died`;
+					updateStatus(string);
+					element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
+					members.splice(member, 1);
+				} else if (dwelling === "rent") {
+					let string = "";
+					if (members.length > 1) {
+						let otherMember = Math.floor(Math.random()*(members.length-1));
+						if (member === otherMember) otherMember = members.length-1;
+						string = `${members[member].name} got sick, and because you rent a very small room their condition spread to ${members[otherMember].name}`;
+					} else {
+						string = `${members[member].name} got sick`;
+					}
+					updateStatus(string);
+					element.innerHTML = `<h3>${string}</h3><br><br>Press a button to see if they live:<br><button onClick="payForDoctor()">Pay for a doctor - $10</button><br><button onClick="nextCycleChoose(this)">Next</button>`;
+				}
+		}
+	}
 }
 function updateStatus(string) {
 	let status = document.getElementById("status");
