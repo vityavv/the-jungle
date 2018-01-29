@@ -64,7 +64,17 @@ function chooseDwelling(chosenDwelling) {
 	document.getElementById("jobChooser").innerText = members[jobChooser].name;
 }
 function chooseJob(element, skip) {
-	if (skip) return;//if you're not getting a job or already have one, skip!
+	if (skip) {
+		jobChooser++;//next jobChooser
+		if (!members[jobChooser]) {
+			document.getElementById("job").style.display = "none";
+			document.getElementById("game").style.display = "block";
+			startCycle();
+			return;
+		}
+		document.getElementById("jobChooser").innerText = members[jobChooser].name;//show their name
+		return;
+	};//if you're not getting a job or already have one, skip!
 
 	Array.from(document.getElementsByClassName("job")).forEach(el => {el.style.visibility = "hidden"});
 	element.style.visibility = "visible";//make sure you can only see the one you picked
@@ -146,31 +156,74 @@ function chooseCycle(element) {
 	element.style.visibility = "visible";
 	element.style.background = "white";
 
-	let chosen = /*Math.floor(Math.random()*6)*/ 0;
+	let chosen = /*Math.floor(Math.random()*6)*/ 1;
 	if (!cycleType) {
 		cycleType = 1;
 		switch (chosen) {
 			case 0:
 				let member = Math.floor(Math.random()*members.length);
+				let otherMember = false;
 				if (dwelling === "homeless") {
-					let string = `${members[member].name} got sick, and because your family is homeless their condition escalated and they died`;
+					let string = `"${members[member].name}" got sick, and because your family is homeless their condition escalated and they died`;
 					updateStatus(string);
 					element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 					members.splice(member, 1);
 				} else if (dwelling === "rent") {
 					let string = "";
 					if (members.length > 1) {
-						let otherMember = Math.floor(Math.random()*(members.length-1));
+						otherMember = Math.floor(Math.random()*(members.length-1));
 						if (member === otherMember) otherMember = members.length-1;
-						string = `${members[member].name} got sick, and because you rent a very small room their condition spread to ${members[otherMember].name}`;
+						string = `"${members[member].name}" got sick, and because you rent a very small room their condition spread to "${members[otherMember].name}"`;
 					} else {
 						string = `${members[member].name} got sick`;
 					}
 					updateStatus(string);
-					element.innerHTML = `<h3>${string}</h3><br><br>Press a button to see if they live:<br><button onClick="payForDoctor()">Pay for a doctor - $10</button><br><button onClick="nextCycleChoose(this)">Next</button>`;
+					let array = otherMember ? [member, otherMember] : [member];
+					element.innerHTML = `<h3>${string}</h3><br><br>Press a button to see if they live:<br><button onClick="payForDoctor(${JSON.stringify(array)}, this)">Pay for a doctor - $10</button><br><button onClick="dontPayForDoctor(${JSON.stringify(array)}, this)">Take your Chances</button>`;
 				}
+				break;
+			case 1:
+				let jobMembers = members.filter(person => person.job !== 0);
+				let member = jobMembers[Math.floor(Math.random()*jobMembers.length)];
+				member.job = 0;
+				let string = `"${member.name}" lost their job."`;
+				updateStatus(string);
+				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+				break;
 		}
 	}
+}
+function seeIfTheyGetBetter(betterArray, sicks) {
+	let newInner = "<h3>";
+	sicks.forEach(sick => {
+		let die = betterArray[Math.floor(Math.random()*betterArray.length)];
+		if (die) {
+			let string = `"${sick.name}" died from their sickness`;
+			updateStatus(string);
+			members.splice(members.indexOf(sick), 1);
+			newInner += `${string}<br>`;
+		} else {
+			let string = `"${sick.name}" got better and is no longer sick!`;
+			updateStatus(string);
+			newInner += `${string}<br>`;
+		}
+	});
+	newInner += "</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>";
+	return newInner;
+}
+function payForDoctor(sicks, element) {
+	sicks = sicks.map(sick => members[sick]);
+	if (money < 10) {
+		alert("You don't have enough money!");
+		return;
+	}
+	let newInner = seeIfTheyGetBetter([true, false], sicks);
+	element.parentNode.innerHTML = newInner;
+}
+function dontPayForDoctor(sicks, element) {
+	sicks = sicks.map(sick => members[sick]);
+	let newInner = seeIfTheyGetBetter([true, true, false], sicks);
+	element.parentNode.innerHTML = newInner;
 }
 function updateStatus(string) {
 	let status = document.getElementById("status");
