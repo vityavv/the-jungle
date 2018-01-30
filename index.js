@@ -154,10 +154,12 @@ function chooseCycle(element) {
 	element.style.visibility = "visible";
 	element.style.background = "white";
 
-	let chosen = /*Math.floor(Math.random()*6)*/ 1;
+	let chosen = /*Math.floor(Math.random()*6)*/ 2;
 	if (!cycleType) {
 		cycleType = 1;
 		let member;
+		let jobMembers = members.filter(person => person.job !== 0);
+		let string;
 		switch (chosen) {
 			case 0:
 				member = Math.floor(Math.random()*members.length);
@@ -182,7 +184,6 @@ function chooseCycle(element) {
 				}
 				break;
 			case 1:
-				let jobMembers = members.filter(person => person.job !== 0);
 				if (!jobMembers.length) {
 					let string = "The companies were downsizing today, but since nobody has a job in your family, you were untouched"
 					updateStatus(string);
@@ -191,10 +192,21 @@ function chooseCycle(element) {
 				}
 				member = jobMembers[Math.floor(Math.random()*jobMembers.length)];
 				member.job = 0;
-				let string = `"${member.name}" lost their job.`;
+				string = `"${member.name}" lost their job.`;
 				updateStatus(string);
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 				break;
+			case 2:
+				if (!jobMembers.length) {
+					let string = `"${members[Math.floor(Math.random()*members.length)].name}" overslept today, but since they don't have a job it doesn't matter`;
+					updateStatus(string);
+					element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+					return;
+				}
+				member = jobMembers[Math.floor(Math.random()*jobMembers.length)];
+				string = `"${member.name}" overslept and is at risk of losing their job`;
+				updateStatus(string);
+				element.innerHTML = `<h3>${string}</h3><br><br><span><button onClick='bribeToKeepJob(this)'>Bribe the boss to keep the job - $10</button><br><br><button onClick='oversleptChances(this, ${members.indexOf(member)})'>Try returning to your job</button></span>`;
 		}
 	}
 }
@@ -230,6 +242,28 @@ function dontPayForDoctor(sicks, element) {
 	sicks = sicks.map(sick => members[sick]);
 	let newInner = seeIfTheyGetBetter([true, true, false], sicks);
 	element.parentNode.innerHTML = newInner;
+}
+function bribeToKeepJob(element) {
+	if (money < 10) {
+		alert("You don't have enough money!");
+		return;
+	}
+	money -= 10;
+	let string = "You bribed the boss and got to keep the job!"
+	element.parentNode.innerHTML = `${string}<br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+}
+function oversleptChances(element, memberIndex) {
+	let member = members[memberIndex];
+	if (Math.random() > (1/3)) {
+		member.job = 0;
+		let string = `"${member.name}" lost their job because they overslept.`;
+		updateStatus(string);
+		element.parentNode.innerHTML = `${string}<br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+	} else {
+		let string = `"${member.name}" came back to their job after oversleeping and their boss decided to be generous and let them stay!`;
+		updateStatus(string);
+		element.parentNode.innerHTML = `${string}<br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+	}
 }
 function updateStatus(string) {
 	let status = document.getElementById("status");
