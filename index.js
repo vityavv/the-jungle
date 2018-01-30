@@ -91,6 +91,8 @@ function chooseJob(element, skip) {
 	element.innerHTML += "<button onClick='nextJobChoose(this)'>Next</button>";
 	element.removeAttribute("onClick");//make sure that it doesn't change when you click on it by taking that away
 
+	document.getElementById("skipButton").style.display = "none";//make the skip button invisible
+
 	members[jobChooser].job = job;//sets the job for real now
 }
 function bribe() {
@@ -117,6 +119,7 @@ function nextJobChoose(element) {
 	parent.style.background = "lightcyan";//make them light-cyan again
 	setTimeout(()=>{parent.setAttribute("onClick", "chooseJob(this)")}, 100);//some things I don't like, and this is one of them
 	parent.innerHTML = "";//take away the text
+	document.getElementById("skipButton").style.display = "";//Show the skip button again
 }
 //Game functions:
 
