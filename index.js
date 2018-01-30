@@ -217,6 +217,7 @@ function payForDoctor(sicks, element) {
 		alert("You don't have enough money!");
 		return;
 	}
+	money -= 10;
 	let newInner = seeIfTheyGetBetter([true, false], sicks);
 	element.parentNode.innerHTML = newInner;
 }
