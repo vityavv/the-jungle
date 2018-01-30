@@ -157,7 +157,7 @@ function chooseCycle(element) {
 	element.style.visibility = "visible";
 	element.style.background = "white";
 
-	let chosen = /*Math.floor(Math.random()*6)*/ 2;
+	let chosen = /*Math.floor(Math.random()*6)*/ 3;
 	if (!cycleType) {
 		cycleType = 1;
 		let member;
@@ -210,6 +210,14 @@ function chooseCycle(element) {
 				string = `"${member.name}" overslept and is at risk of losing their job`;
 				updateStatus(string);
 				element.innerHTML = `<h3>${string}</h3><br><br><span><button onClick='bribeToKeepJob(this)'>Bribe the boss to keep the job - $10</button><br><br><button onClick='oversleptChances(this, ${members.indexOf(member)})'>Try returning to your job</button></span>`;
+				break;
+			case 3:
+				string = `A month passed and nothing happened! Yay!`;
+				updateStatus(string);
+				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+				break;
+			case 4:
+
 		}
 	}
 }
