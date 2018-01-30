@@ -129,9 +129,7 @@ function startCycle() {
 		if (money < 12) {
 			//TODO: You lose
 		}
-		console.log(money);
 		money -= 12;
-		console.log(money);
 		updateStatus(`You spent $12 to pay off your house. You have $${money} left.`);
 	}
 	if (dwelling === "rent") {
@@ -159,9 +157,10 @@ function chooseCycle(element) {
 	let chosen = /*Math.floor(Math.random()*6)*/ 1;
 	if (!cycleType) {
 		cycleType = 1;
+		let member;
 		switch (chosen) {
 			case 0:
-				let member = Math.floor(Math.random()*members.length);
+				member = Math.floor(Math.random()*members.length);
 				let otherMember = false;
 				if (dwelling === "homeless") {
 					let string = `"${members[member].name}" got sick, and because your family is homeless their condition escalated and they died`;
@@ -184,9 +183,15 @@ function chooseCycle(element) {
 				break;
 			case 1:
 				let jobMembers = members.filter(person => person.job !== 0);
-				let member = jobMembers[Math.floor(Math.random()*jobMembers.length)];
+				if (!jobMembers.length) {
+					let string = "The companies were downsizing today, but since nobody has a job in your family, you were untouched"
+					updateStatus(string);
+					element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+					return;
+				}
+				member = jobMembers[Math.floor(Math.random()*jobMembers.length)];
 				member.job = 0;
-				let string = `"${member.name}" lost their job."`;
+				let string = `"${member.name}" lost their job.`;
 				updateStatus(string);
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 				break;
