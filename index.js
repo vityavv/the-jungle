@@ -157,7 +157,7 @@ function chooseCycle(element) {
 	element.style.visibility = "visible";
 	element.style.background = "white";
 
-	let chosen = /*Math.floor(Math.random()*6)*/ 5;
+	let chosen = Math.floor(Math.random()*6);
 	if (!cycleType) {
 		cycleType = 1;
 		let member;
