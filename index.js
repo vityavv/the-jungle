@@ -157,7 +157,7 @@ function chooseCycle(element) {
 	element.style.visibility = "visible";
 	element.style.background = "white";
 
-	let chosen = /*Math.floor(Math.random()*6)*/ 3;
+	let chosen = /*Math.floor(Math.random()*6)*/ 5;
 	if (!cycleType) {
 		cycleType = 1;
 		let member;
@@ -217,7 +217,33 @@ function chooseCycle(element) {
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 				break;
 			case 4:
-
+				let drys = members.filter(person => !person.alcoholic);
+				if (drys.length) {
+					let member = drys[Math.floor(Math.random()*drys.length)];
+					member.alcoholic = true;
+					let string = `"${member.name}" fell victim to alcohol and is now an alcoholic, so they must pay $1 every month`;
+					updateStatus(string);
+					element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+				} else {
+					let string = `"${members[Math.floor(Math.random()*members.length)].name}" went on a drinking spree and spent a dollar on drinks.`;
+					money -= 1;
+					updateStatus(string);
+					element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+				}
+				break;
+			case 5:
+				if (jobMembers.length) {
+					let member = jobMembers[Math.floor(Math.random()*jobMembers.length)];
+					let string = `"${member.name}" went out into the cold and their hands froze off. Their pay got cut in half as a punishment.`;
+					member.job /= 2;
+					updateStatus(string);
+					element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCyc;eChoose(this)'>Next</button>`;
+				} else {
+					let string = `"${members[Math.floor(Math.random()*members.length)].name}" went out into the cold and their hands froze off. However, since they don't have a job, they just came back inside and thawed their hands.`;
+					updateStatus(string);
+					element.innerHTML = `<h3>${string}</h3><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+				}
+				break;
 		}
 	}
 }
