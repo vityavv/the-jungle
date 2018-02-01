@@ -31,7 +31,8 @@ h1, h2, h3 {
 	padding: 5px;
 }
 #choosebox {
-	width: 685px;
+	width: 675px;
+	overflow-y: hidden;
 }
 .status {
 	padding: 5px;
