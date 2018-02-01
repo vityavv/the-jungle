@@ -1,7 +1,18 @@
 //GOOGLE COUNT: 1
 //DISCORD COUNT: 1
 //SO COUNT: 0
-
+function updateFamily() {
+	let string = "";
+	members.forEach(person => {
+		string += `"${person.name}" - Job: $${person.job}`;
+		if (person.alcoholic) string += " - Alcoholic";
+		string += "<br>"
+	});
+	document.getElementById("familyDisplay").innerHTML = string;
+}
+function updateMoney() {
+	document.getElementById("money").innerHTML = money;
+}
 class Person {
 	constructor(name) {
 		this.jobStore = 0;
@@ -12,14 +23,15 @@ class Person {
 		return this.jobStore;
 	}
 	set job(value) {
-		console.log(`"${this.name}"'s job changed from ${this.jobStore} to ${value}`);
 		this.jobStore = value;
+		updateFamily();
 	}
 	get alcoholic() {
 		return this.alcoholicStore;
 	}
 	set alcoholic(value) {
-		console.log(`"${this.name}" became an alcoholic!`);
+		this.alcoholicStore = value;
+		updateFamily();
 	}
 }
 
@@ -30,7 +42,6 @@ let members = new Proxy(membersStore, {
 		return thisArg[target].apply(this, argumentList);
 	},
 	deleteProperty: (target, property) => {
-		console.log(`${target[property].name} died`);
 		return true;
 	},
 	set: (target, property, value, receiver) => {
@@ -191,7 +202,7 @@ function chooseCycle(element) {
 	element.style.visibility = "visible";
 	element.style.background = "white";
 
-	let chosen = Math.floor(Math.random()*6);
+	let chosen = Math.floor(Math.random()*6);chosen=0;
 	if (!cycleType) {
 		cycleType = 1;
 		let member;
@@ -206,6 +217,7 @@ function chooseCycle(element) {
 					updateStatus(string);
 					element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 					members.splice(member, 1);
+					updateFamily();
 				} else if (dwelling === "rent") {
 					let string = "";
 					if (members.length > 1) {
@@ -289,6 +301,7 @@ function seeIfTheyGetBetter(betterArray, sicks) {
 			let string = `"${sick.name}" died from their sickness`;
 			updateStatus(string);
 			members.splice(members.indexOf(sick), 1);
+			updateFamily();
 			newInner += `${string}<br>`;
 		} else {
 			let string = `"${sick.name}" got better and is no longer sick!`;
