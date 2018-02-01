@@ -2,15 +2,47 @@
 //DISCORD COUNT: 1
 //SO COUNT: 0
 
-const cycleOne = ["Someone gets sick", "Someone loses their job", "You oversleep", "Nothing happens!", "turns into an alcoholic", "hands freze"];
+class Person {
+	constructor(name) {
+		this.jobStore = 0;
+		this.name = name || "";
+		this.alcoholicStore = false;
+	}
+	get job() {
+		return this.jobStore;
+	}
+	set job(value) {
+		console.log(`"${this.name}"'s job changed from ${this.jobStore} to ${value}`);
+		this.jobStore = value;
+	}
+	get alcoholic() {
+		return this.alcoholicStore;
+	}
+	set alcoholic(value) {
+		console.log(`"${this.name}" became an alcoholic!`);
+	}
+}
 
 //VARS
-let members = [];
+let membersStore = [];
+let members = new Proxy(membersStore, {
+	apply: (target, thisArg, argumentList) => {
+		return thisArg[target].apply(this, argumentList);
+	},
+	deleteProperty: (target, property) => {
+		console.log(`${target[property].name} died`);
+		return true;
+	},
+	set: (target, property, value, receiver) => {
+		target[property] = value;
+		return true;
+	}
+});
 let moneyStore = 700;
 Object.defineProperty(window, "money", {
 	get: () => moneyStore,
 	set: value => {
-		alert(`Money changed from ${moneyStore} to ${value}`);
+		console.log(`Money changed from ${moneyStore} to ${value}`);
 		moneyStore = value;
 	}
 });
@@ -41,11 +73,6 @@ function startGame() {//Start the game
 	});
 	document.getElementById("dwelling").style.display = "block";
 	document.getElementById("family").style.display = "none";//hide the family menu and show the house one
-}
-function Person(name) {//Constructor for making a new person
-	this.job = 0;
-	this.alcoholic = false;
-	this.name = name || "";//if there's no name (there shouldn't be, but just in case, and testing) it defaults to empty string
 }
 //Choosing a house
 function chooseDwelling(chosenDwelling) {
