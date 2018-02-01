@@ -1,12 +1,19 @@
 //GOOGLE COUNT: 1
-//DISCORD COUNT: 0
+//DISCORD COUNT: 1
 //SO COUNT: 0
 
 const cycleOne = ["Someone gets sick", "Someone loses their job", "You oversleep", "Nothing happens!", "turns into an alcoholic", "hands freze"];
 
 //VARS
 let members = [];
-let money = 700;
+let moneyStore = 700;
+Object.defineProperty(window, "money", {
+	get: () => moneyStore,
+	set: value => {
+		alert(`Money changed from ${moneyStore} to ${value}`);
+		moneyStore = value;
+	}
+});
 window.onload = () => {updateStatus("You come into America with your family and $700");};
 let cycle = 0;
 let dwelling = "homeless";
