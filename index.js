@@ -1,18 +1,7 @@
 //GOOGLE COUNT: 1
 //DISCORD COUNT: 1
 //SO COUNT: 0
-function updateFamily() {
-	let string = "";
-	members.forEach(person => {
-		string += `"${person.name}" - Job: $${person.job}`;
-		if (person.alcoholic) string += " - Alcoholic";
-		string += "<br>"
-	});
-	document.getElementById("familyDisplay").innerHTML = string;
-}
-function updateMoney() {
-	document.getElementById("money").innerHTML = money;
-}
+
 class Person {
 	constructor(name) {
 		this.jobStore = 0;
@@ -352,7 +341,20 @@ function oversleptChances(element, memberIndex) {
 		element.parentNode.innerHTML = `${string}<br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 	}
 }
+//DOM manipulation functions
 function updateStatus(string) {
 	let status = document.getElementById("status");
 	status.innerHTML = `<p class="status">${string}</p><hr/>${status.innerHTML}`;
+}
+function updateFamily() {
+	let string = "";
+	members.forEach(person => {
+		string += `"${person.name}" - Job: $${person.job}`;
+		if (person.alcoholic) string += " - Alcoholic";
+		string += "<br>"
+	});
+	document.getElementById("familyDisplay").innerHTML = string;
+}
+function updateMoney() {
+	document.getElementById("money").innerHTML = money;
 }
