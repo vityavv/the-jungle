@@ -53,7 +53,7 @@ let moneyStore = 700;
 Object.defineProperty(window, "money", {
 	get: () => moneyStore,
 	set: value => {
-		console.log(`Money changed from ${moneyStore} to ${value}`);
+		document.getElementById("money").innerHTML = value;
 		moneyStore = value;
 	}
 });
@@ -213,24 +213,27 @@ function chooseCycle(element) {
 				member = Math.floor(Math.random()*members.length);
 				let otherMember = false;
 				if (dwelling === "homeless") {
-					let string = `"${members[member].name}" got sick, and because your family is homeless their condition escalated and they died`;
+					string = `"${members[member].name}" got sick, and because your family is homeless their condition escalated and they died`;
 					updateStatus(string);
 					element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 					members.splice(member, 1);
 					updateFamily();
+					return
 				} else if (dwelling === "rent") {
-					let string = "";
+					string = "";
 					if (members.length > 1) {
 						otherMember = Math.floor(Math.random()*(members.length-1));
 						if (member === otherMember) otherMember = members.length-1;
 						string = `"${members[member].name}" got sick, and because you rent a very small room their condition spread to "${members[otherMember].name}"`;
 					} else {
-						string = `${members[member].name} got sick`;
+						string = `"${members[member].name}" got sick`;
 					}
-					updateStatus(string);
-					let array = otherMember ? [member, otherMember] : [member];
-					element.innerHTML = `<h3>${string}</h3><br><br>Press a button to see if they live:<br><button onClick="payForDoctor(${JSON.stringify(array)}, this)">Pay for a doctor - $10</button><br><button onClick="dontPayForDoctor(${JSON.stringify(array)}, this)">Take your Chances</button>`;
+				} else {
+					string = `"${members[member].name}" got sick`;
 				}
+				updateStatus(string);
+				let array = otherMember ? [member, otherMember] : [member];
+				element.innerHTML = `<h3>${string}</h3><br><br>Press a button to see if they live:<br><button onClick="payForDoctor(${JSON.stringify(array)}, this)">Pay for a doctor - $10</button><br><button onClick="dontPayForDoctor(${JSON.stringify(array)}, this)">Take your Chances</button>`;
 				break;
 			case 1:
 				if (!jobMembers.length) {
