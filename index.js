@@ -190,10 +190,11 @@ function chooseCycle(element) {
 	Array.from(document.getElementsByClassName("cycle")).forEach(el => {el.style.visibility = "hidden"});
 	element.style.visibility = "visible";
 	element.style.background = "white";
+	element.removeAttribute("onClick");
 
-	let chosen = Math.floor(Math.random()*6);chosen=0;
+	let chosen = Math.floor(Math.random()*6);
 	if (!cycleType) {
-		cycleType = 1;
+		//cycleType = 1;
 		let member;
 		let jobMembers = members.filter(person => person.job !== 0);
 		let string;
@@ -275,7 +276,7 @@ function chooseCycle(element) {
 					let string = `"${member.name}" went out into the cold and their hands froze off. Their pay got cut in half as a punishment.`;
 					member.job /= 2;
 					updateStatus(string);
-					element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCyc;eChoose(this)'>Next</button>`;
+					element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 				} else {
 					let string = `"${members[Math.floor(Math.random()*members.length)].name}" went out into the cold and their hands froze off. However, since they don't have a job, they just came back inside and thawed their hands.`;
 					updateStatus(string);
@@ -325,8 +326,10 @@ function bribeToKeepJob(element) {
 		return;
 	}
 	money -= 10;
-	let string = "You bribed the boss and got to keep the job!"
-	element.parentNode.innerHTML = `${string}<br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+	let string = "You bribed the boss and got to keep the job!";
+	let parent = element.parentNode;
+	parent.innerHTML = string;
+	parent.parentNode.innerHTML += "<br><br><button onClick='nextCycleChoose(this)'>Next</button>"
 }
 function oversleptChances(element, memberIndex) {
 	let member = members[memberIndex];
@@ -334,13 +337,26 @@ function oversleptChances(element, memberIndex) {
 		member.job = 0;
 		let string = `"${member.name}" lost their job because they overslept.`;
 		updateStatus(string);
-		element.parentNode.innerHTML = `${string}<br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+		let parent = element.parentNode;
+		parent.innerHTML = string;
+		parent.parentNode.innerHTML += "<br><br><button onClick='nextCycleChoose(this)'>Next</button>";
 	} else {
 		let string = `"${member.name}" came back to their job after oversleeping and their boss decided to be generous and let them stay!`;
 		updateStatus(string);
-		element.parentNode.innerHTML = `${string}<br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+		let parent = element.parentNode;
+		parent.innerHTML = string;
+		parent.parentNode.innerHTML += "<br><br><button onClick='nextCycleChoose(this)'>Next</button>";
 	}
 }
+function nextCycleChoose(element) {
+	startCycle();
+		Array.from(document.getElementsByClassName("cycle")).forEach(el => {el.style.visibility = "visible"});
+		let parent = element.parentNode;
+	parent.style.background = "lightcyan";
+		setTimeout(()=>{parent.setAttribute("onClick", "chooseCycle(this)")}, 100);
+		parent.innerHTML = "";
+	}
+
 //DOM manipulation functions
 function updateStatus(string) {
 	let status = document.getElementById("status");
