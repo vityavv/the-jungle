@@ -46,6 +46,14 @@ Object.defineProperty(window, "money", {
 		moneyStore = value;
 	}
 });
+let babyStore = 0;
+Object.defineProperty(window, "babies", {
+	get: () => babyStore,
+	set: value => {
+		babyStore = value;
+		updateFamily();
+	}
+});
 window.onload = () => {updateStatus("You come into America with your family and $700");};
 let cycle = 0;
 let dwelling = "homeless";
@@ -222,6 +230,7 @@ function updateFamily() {
 		if (person.alcoholic) string += " - Alcoholic";
 		string += "<br>"
 	});
+	if (babies) string += babies + (babies === 1 ? " baby" : " babies");
 	document.getElementById("familyDisplay").innerHTML = string;
 }
 function updateMoney() {

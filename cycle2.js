@@ -1,5 +1,5 @@
 function chooseCycleTwo(element) {
-	let chosen = Math.floor(Math.random()*6);chosen = 2;
+	let chosen = Math.floor(Math.random()*6);chosen = 3;
 	let member, string;
 	let jobMembers = members.filter(person => person.job !== 0);
 	switch (chosen) {
@@ -33,6 +33,12 @@ function chooseCycleTwo(element) {
 			member = jobLess[Math.floor(Math.random()*jobLess.length)];
 			member.job = 2;
 			string = `"${member.name}" gets a job and it pays them two dollars!`;
+			updateStatus(string);
+			element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
+			break;
+		case 3:
+			babies++;
+			string = "Your family gets a baby! It's up to your imagination to know how";
 			updateStatus(string);
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 			break;
