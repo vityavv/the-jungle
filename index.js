@@ -73,6 +73,7 @@ function startGame() {//Start the game
 	});
 	document.getElementById("dwelling").style.display = "block";
 	document.getElementById("family").style.display = "none";//hide the family menu and show the house one
+	updateFamily();
 }
 //Choosing a house
 function chooseDwelling(chosenDwelling) {
