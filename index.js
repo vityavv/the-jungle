@@ -193,7 +193,11 @@ function chooseCycle(element) {
 	element.removeAttribute("onClick");
 
 	if (cycleType === 0) {
+		cycleType = 1;
 		chooseCycleOne(element);
+	} else if (cycleType = 1) {
+		//cycleType = 0;
+		chooseCycleTwo(element);
 	}
 }
 function nextCycleChoose(element) {
