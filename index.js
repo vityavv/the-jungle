@@ -95,7 +95,7 @@ function chooseDwelling(chosenDwelling) {
 	if (chosenDwelling === "house") {
 		if (money >= 300) {//make sure you have enough money
 			dwelling = "house";
-			house = 10;//this is a counting-down number---when it reaches 0 you stop paying
+			house = 20;//this is a counting-down number---when it reaches 0 you stop paying
 			money -= 300;
 			updateStatus(`You pay $300 down for a new house! You have $${money} left`);
 		} else {
@@ -231,7 +231,7 @@ function chooseCycle(element) {
 		cycleType = 1;
 		chooseCycleOne(element);
 	} else if (cycleType = 1) {
-		//cycleType = 0;
+		cycleType = 0;
 		chooseCycleTwo(element);
 	}
 }

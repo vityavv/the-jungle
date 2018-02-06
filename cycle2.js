@@ -1,5 +1,5 @@
 function chooseCycleTwo(element) {
-	let chosen = Math.floor(Math.random()*6);chosen=5;
+	let chosen = Math.floor(Math.random()*6);
 	let member, string;
 	let jobMembers = members.filter(person => person.job !== 0);
 	switch (chosen) {
@@ -23,7 +23,7 @@ function chooseCycleTwo(element) {
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 			break;
 		case 2:
-			let jobLess = members.filter(person => person.job === 0);
+			let jobLess = members.filter(person => person.job === 0 && person.canGetJob);
 			if (!jobLess.length) {
 				string = `A month passed and nothing happened! Yay!`;
 				updateStatus(string);
@@ -77,6 +77,7 @@ function chooseCycleTwo(element) {
 				updateStatus(string);
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextJobChoose(this)">Next</button>`;
 				members.splice(memberIndex, 1);
+				updateFamily()
 				return;
 			}
 			member = canGetJobMembers[Math.floor(Math.random()*canGetJobMembers.length)];
