@@ -7,6 +7,7 @@ class Person {
 		this.jobStore = 0;
 		this.name = name || "";
 		this.alcoholicStore = false;
+		this.canGetJobStore = true;
 	}
 	get job() {
 		return this.jobStore;
@@ -20,6 +21,14 @@ class Person {
 	}
 	set alcoholic(value) {
 		this.alcoholicStore = value;
+		updateFamily();
+	}
+	get canGetJob() {
+		return this.canGetJobStore;
+	}
+	set canGetJob(value) {
+		this.canGetJobStore = value;
+		if (!value) this.job = 0;
 		updateFamily();
 	}
 }
@@ -104,6 +113,7 @@ function chooseDwelling(chosenDwelling) {
 	}
 	document.getElementById("job").style.display = "block";
 	document.getElementById("dwelling").style.display = "none";//go to the next screen
+	while(!members[jobChooser].canGetJob) jobChooser++;
 	document.getElementById("jobChooser").innerText = members[jobChooser].name;
 }
 function chooseJob(element, skip) {
@@ -114,6 +124,15 @@ function chooseJob(element, skip) {
 			document.getElementById("game").style.display = "block";
 			startCycle();
 			return;
+		}
+		while(!members[jobChooser].canGetJob) {
+			jobChooser++;
+			if (!members[jobChooser]) {
+				document.getElementById("job").style.display = "none";
+				document.getElementById("game").style.display = "block";
+				startCycle();
+				return;
+			}
 		}
 		document.getElementById("jobChooser").innerText = members[jobChooser].name;//show their name
 		return;
@@ -155,6 +174,15 @@ function nextJobChoose(element) {
 		document.getElementById("game").style.display = "block";
 		startCycle();
 		return;
+	}
+	while(!members[jobChooser].canGetJob) {
+		jobChooser++;
+		if (!members[jobChooser]) {
+			document.getElementById("job").style.display = "none";
+			document.getElementById("game").style.display = "block";
+			startCycle();
+			return;
+		}
 	}
 	document.getElementById("jobChooser").innerText = members[jobChooser].name;//show their name
 	Array.from(document.getElementsByClassName("job")).forEach(el => {el.style.visibility = "visible"});//make sure you can see all of the options
@@ -228,6 +256,7 @@ function updateFamily() {
 	members.forEach(person => {
 		string += `"${person.name}" - Job: $${person.job}`;
 		if (person.alcoholic) string += " - Alcoholic";
+		if (!person.canGetJob) string += " - Permanently injured and can't get a job";
 		string += "<br>"
 	});
 	if (babies) string += babies + (babies === 1 ? " baby" : " babies");
