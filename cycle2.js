@@ -1,5 +1,5 @@
 function chooseCycleTwo(element) {
-	let chosen = Math.floor(Math.random()*6);chosen = 4;
+	let chosen = Math.floor(Math.random()*6);chosen=5;
 	let member, string;
 	let jobMembers = members.filter(person => person.job !== 0);
 	switch (chosen) {
@@ -68,6 +68,22 @@ function chooseCycleTwo(element) {
 				updateStatus(string);
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 			}
+			break;
+		case 5:
+			let canGetJobMembers = (jobMembers.length ? jobMembers : members.filter(person => person.canGetJob));
+			if (!canGetJobMembers.length) {
+				let memberIndex = Math.floor(Math.random()*members.length);
+				let string = `"${members[memberIndex].name}" fell into a pit, but because their hands were frostbitten they couldn't climb out. Nobody came to help them, their body froze, and they died`;
+				updateStatus(string);
+				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextJobChoose(this)">Next</button>`;
+				members.splice(memberIndex, 1);
+				return;
+			}
+			member = canGetJobMembers[Math.floor(Math.random()*canGetJobMembers.length)];
+			member.canGetJob = false;
+			string = `"${member.name}" went out into the cold and their hands got frostbite. They can't return to their job, and they can never get a job again`;
+			updateStatus(string);
+			element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 			break;
 	}
 }
