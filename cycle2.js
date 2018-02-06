@@ -1,5 +1,5 @@
 function chooseCycleTwo(element) {
-	let chosen = Math.floor(Math.random()*6);chosen = 3;
+	let chosen = Math.floor(Math.random()*6);chosen = 4;
 	let member, string;
 	let jobMembers = members.filter(person => person.job !== 0);
 	switch (chosen) {
@@ -41,6 +41,33 @@ function chooseCycleTwo(element) {
 			string = "Your family gets a baby! It's up to your imagination to know how";
 			updateStatus(string);
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
+			break;
+		case 4:
+			let memberIndex = Math.floor(Math.random()*members.length);
+			let number;
+			if (dwelling === "homeless") {
+				let string = `"${members[memberIndex].name}" turned depressed, and because of the state of your family they decided to end it all, and killed themselves`;
+				updateStatus(string);
+				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
+				members.splice(memberIndex, 1);
+				updateFamily();
+				return;
+			} else if (dwelling === "rent") number = 0.5;
+			else if (dwelling === "house") number = 0.3;
+			if (Math.random() < number) {
+				let string = `"${members[memberIndex].name}" turned depressed, and because of the state of your family they decided to end it all, and killed themselves`;
+				updateStatus(string);
+				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
+				members.splice(memberIndex, 1);
+				updateFamily();
+			} else {
+				if (members[memberIndex].job) {
+					string = `"${members[memberIndex].name}" turned depressed, decided to go to the salon, and spent his week's pay on drink`;
+					money -= members[memberIndex].job;
+				} else string = `"${members[memberIndex].name}" turned depressed, but they had nothing to lose so they pulled themselves together`;
+				updateStatus(string);
+				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
+			}
 			break;
 	}
 }
