@@ -1,7 +1,5 @@
-//GOOGLE COUNT: 1
-//DISCORD COUNT: 1
-//SO COUNT: 0
-
+//THANK @la_grib (from http://discord.gg/code) for helping me
+//find a great solution to the updating problem! :heart:
 class Person {
 	constructor(name) {
 		this.jobStore = 0;
