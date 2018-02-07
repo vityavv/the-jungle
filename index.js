@@ -92,12 +92,14 @@ function startGame() {//Start the game
 }
 //Choosing a house
 function chooseDwelling(chosenDwelling) {
+	let youHave = "";
 	if (chosenDwelling === "house") {
 		if (money >= 300) {//make sure you have enough money
 			dwelling = "house";
 			house = 20;//this is a counting-down number---when it reaches 0 you stop paying
 			money -= 300;
 			updateStatus(`You pay $300 down for a new house! You have $${money} left`);
+			youHave = "You already live in a house. Choose an option below to change your dwelling or press skip to continue ";
 		} else {
 			alert("You don't have enough money for that!");//if you don't...
 			return;
@@ -105,14 +107,34 @@ function chooseDwelling(chosenDwelling) {
 	} else if (chosenDwelling === "rent") {
 		dwelling = "rent";
 		house = 0;//reset the counting-down if someone loses their house
+		youHave = "You currently pay rent each cycle. Choose an option below to change your dwelling or press skip to continue ";
 	} else {
 		dwelling = "homeless";
 		house = 0;//^^^
+		youHave = "You're homeless. Press skip to stay homeless, or choose one of the options below ";
 	}
-	document.getElementById("job").style.display = "block";
-	document.getElementById("dwelling").style.display = "none";//go to the next screen
-	while(!members[jobChooser].canGetJob) jobChooser++;
-	document.getElementById("jobChooser").innerText = members[jobChooser].name;
+	youHave += "<button onClick='skipDwelling()'>Skip</button>";
+	document.getElementById("youHave").innerHTML = youHave;
+	if (cycle === 0) {
+		document.getElementById("job").style.display = "block";
+		document.getElementById("dwelling").style.display = "none";//go to the next screen
+		while(!members[jobChooser].canGetJob) jobChooser++;
+		document.getElementById("jobChooser").innerText = members[jobChooser].name;
+	} else {
+		document.getElementById("dwelling").style.display = "none";
+		document.getElementById("game").style.display = "block";
+	}
+}
+function skipDwelling() {
+	if (cycle === 0) {
+		document.getElementById("job").style.display = "block";
+		document.getElementById("dwelling").style.display = "none";//go to the next screen
+		while(!members[jobChooser].canGetJob) jobChooser++;
+		document.getElementById("jobChooser").innerText = members[jobChooser].name;
+	} else {
+		document.getElementById("dwelling").style.display = "none";
+		document.getElementById("game").style.display = "block";
+	}
 }
 function chooseJob(element, skip) {
 	if (skip) {
@@ -178,6 +200,7 @@ function nextJobChoose(element) {
 		if (!members[jobChooser]) {
 			document.getElementById("job").style.display = "none";
 			document.getElementById("game").style.display = "block";
+			cycleType = 0;
 			startCycle();
 			return;
 		}
@@ -230,19 +253,24 @@ function chooseCycle(element) {
 	if (cycleType === 0) {
 		cycleType = 1;
 		chooseCycleOne(element);
-	} else if (cycleType = 1) {
-		cycleType = 0;
+	} else if (cycleType === 1) {
+		cycleType = 2;
 		chooseCycleTwo(element);
 	}
 }
 function nextCycleChoose(element) {
 	startCycle();
-		Array.from(document.getElementsByClassName("cycle")).forEach(el => {el.style.visibility = "visible"});
-		let parent = element.parentNode;
-	parent.style.background = "lightcyan";
-		setTimeout(()=>{parent.setAttribute("onClick", "chooseCycle(this)")}, 100);
-		parent.innerHTML = "";
+	if (cycleType === 2) {
+		document.getElementById("dwelling").style.display = "block";
+		document.getElementById("game").style.display = "none";
+		cycleType = 0;
 	}
+	Array.from(document.getElementsByClassName("cycle")).forEach(el => {el.style.visibility = "visible"});
+	let parent = element.parentNode;
+	parent.style.background = "lightcyan";
+	setTimeout(()=>{parent.setAttribute("onClick", "chooseCycle(this)")}, 100);
+	parent.innerHTML = "";
+}
 
 //DOM manipulation functions
 function updateStatus(string) {
