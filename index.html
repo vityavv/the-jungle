@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="index.css" />
 </head>
 <body>
-	<div id="family">
+	<div id="family" class="hide">
 		<h1>Create Your Family</h1><br>
 		<button onClick="addMember()">Add a family member</button><br>
 		<button onClick="startGame()">Start</button>
@@ -19,7 +19,7 @@
 		</div>
 	</div>
 
-	<div id="dwelling" class="hidden">
+	<div id="dwelling" class="hidden hide">
 		<h1>Choose your dwelling</h1><br>
 		<p id="youHave"></p>
 		<div class="dwelling choose" id="house" onClick="chooseDwelling('house')">
@@ -45,7 +45,7 @@
 		</div>
 	</div>
 
-	<div id="job" class="hidden">
+	<div id="job" class="hidden hide">
 		<h1>Try to get a job!</h1><br>
 		"<span id="jobChooser"></span>" is trying to get a job. <button onClick="chooseJob(this, 'nothing')" id="skipButton">Skip</button><br><br>
 		<div class="job choose" onClick="chooseJob(this)"></div>
@@ -53,7 +53,7 @@
 		<div class="job choose" onClick="chooseJob(this)"></div>
 	</div>
 
-	<div id="game" class="hidden">
+	<div id="game" class="hidden hide">
 		<div id="statusbox" class="statuslikebox">
 			<h1>Status Updates</h1>
 			<hr>
@@ -69,6 +69,14 @@
 			--><div class="cycle choose" onClick="chooseCycle(this)"></div><!--
 			--><div class="cycle choose" onClick="chooseCycle(this)"></div>
 		</div><br>
+	</div>
+	<div id="loseDie" class="hide hidden">
+		<h1>You lost because every single member of your family died</h1><br>
+		<button onClick="location.reload()">Play again</button>
+	</div>
+	<div id="loseMoney" class="hide hidden">
+		<h1>You lost because your family ran out of money and starved to death in the streets</h1><br>
+		<button onClick="location.reload()">Play again</button>
 	</div>
 	<div id="familyDiv">
 		<br>

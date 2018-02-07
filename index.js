@@ -49,7 +49,7 @@ let moneyStore = 700;
 Object.defineProperty(window, "money", {
 	get: () => moneyStore,
 	set: value => {
-		document.getElementById("money").innerHTML = value;
+		updateMoney();
 		moneyStore = value;
 	}
 });
@@ -290,9 +290,17 @@ function updateFamily() {
 		string += "<br>"
 	});
 	if (babies) string += babies + (babies === 1 ? " baby" : " babies");
+	if (members.length === 0) {
+		Array.from(document.getElementsByClassName("hide")).forEach(el => {el.style.display = "none"});
+		document.getElementById("loseDie").style.display = "block";
+	}
 	document.getElementById("familyDisplay").innerHTML = string;
 	document.getElementById("familyTitle").style.display = "block";
 }
 function updateMoney() {
+	if (money <= 0) {
+		Array.from(document.getElementsByClassName("hide")).forEach(el => {el.style.display = "none"});
+		document.getElementById("loseMoney").style.display = "block";
+	}
 	document.getElementById("money").innerHTML = money;
 }
