@@ -261,6 +261,10 @@ function chooseCycle(element) {
 function nextCycleChoose(element) {
 	startCycle();
 	if (cycleType === 2) {
+		let string = `You pay $${members.length * 2} for groceries for the ${members.length} ${members.length === 1 ? "member" : "members"} in your family.<br>`;
+		if (babies > 0) string += `You pay $${babies * 4} for formula and food for your ${babies} ${babies === 1 ? "baby" : "babies"}.`;
+		updateStatus(string);
+		money -= ((members.length * 2) + (babies * 4));
 		document.getElementById("dwelling").style.display = "block";
 		document.getElementById("game").style.display = "none";
 		cycleType = 0;
@@ -287,6 +291,7 @@ function updateFamily() {
 	});
 	if (babies) string += babies + (babies === 1 ? " baby" : " babies");
 	document.getElementById("familyDisplay").innerHTML = string;
+	document.getElementById("familyTitle").style.display = "block";
 }
 function updateMoney() {
 	document.getElementById("money").innerHTML = money;
