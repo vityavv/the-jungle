@@ -2,87 +2,16 @@
 <html>
 <head>
 	<title>The Jungle - The Game</title>
-	<script src="cycle1.js"></script>
-	<script src="cycle2.js"></script>
-	<script src="index.js"></script>
 	<link rel="stylesheet" type="text/css" href="index.css" />
 </head>
 <body>
-	<div id="family" class="hide">
-		<h1>Create Your Family</h1><br>
-		<button onClick="addMember()">Add a family member</button><br>
-		<button onClick="startGame()">Start</button>
-		<br><br>
-		<div class="member">
-			Name: <input/>
-			<button onClick="removeMember(this)">Remove</button>
-		</div>
-	</div>
-
-	<div id="dwelling" class="hidden hide">
-		<h1>Choose your dwelling</h1><br>
-		<p id="youHave"></p>
-		<div class="dwelling choose" id="house" onClick="chooseDwelling('house')">
-			<h2>House</h2>
-			<ul>
-				<li>$300 down</li>
-				<li>$12 per cycle for 20 cycles</li>
-				<li>Yours to keep afterwards</li>
-				<li>No crowded quarters</li>
-			</ul>
-		</div>
-		<div class="dwelling choose" id="rent" onClick="chooseDwelling('rent')">
-			<h2>Rent</h2>
-			<ul>
-				<li>$9 per cycle forever</li>
-			</ul>
-		</div>
-		<div class="dwelling choose" id="homeless" onClick="chooseDwelling('homeless')">
-			<h2>Homeless</h2>
-			<ul>
-				<li>Free forever!</li>
-			</ul>
-		</div>
-	</div>
-
-	<div id="job" class="hidden hide">
-		<h1>Try to get a job!</h1><br>
-		"<span id="jobChooser"></span>" is trying to get a job. <button onClick="chooseJob(this, 'nothing')" id="skipButton">Skip</button><br><br>
-		<div class="job choose" onClick="chooseJob(this)"></div>
-		<div class="job choose" onClick="chooseJob(this)"></div>
-		<div class="job choose" onClick="chooseJob(this)"></div>
-	</div>
-
-	<div id="game" class="hidden hide">
-		<div id="statusbox" class="statuslikebox">
-			<h1>Status Updates</h1>
-			<hr>
-			<div id="status">
-
-			</div>
-		</div>
-		<div class="statuslikebox" id="choosebox">
-			<div class="cycle choose" onClick="chooseCycle(this)"></div><!--
-			--><div class="cycle choose" onClick="chooseCycle(this)"></div><!--
-			--><div class="cycle choose" onClick="chooseCycle(this)"></div><!--
-			--><div class="cycle choose" onClick="chooseCycle(this)"></div><!--
-			--><div class="cycle choose" onClick="chooseCycle(this)"></div><!--
-			--><div class="cycle choose" onClick="chooseCycle(this)"></div>
-		</div><br>
-	</div>
-	<div id="loseDie" class="hide hidden">
-		<h1>You lost because every single member of your family died</h1><br>
-		<button onClick="location.reload()">Play again</button>
-	</div>
-	<div id="loseMoney" class="hide hidden">
-		<h1>You lost because your family ran out of money and starved to death in the streets</h1><br>
-		<button onClick="location.reload()">Play again</button>
-	</div>
-	<div id="familyDiv">
-		<br>
-		<h3>Money: $<span id="money">700</span></h3>
-		<h3 id="familyTitle" class="hidden">Family</h3>
-		<p id="familyDisplay"></p>
-	</div>
+	<h1>The Jungle - The Game</h1>
+	<p><b>Thesis: </b>Upton Sinclair uses thorough descriptions to elicit empathy in the readers.</p>
+	<p>This game shows how Upton Sinclair uses thorough descriptions to elicit empathy in the readers by creating a game, using those descriptions.</p>
+	<h3>Inspiration for the project</h3>
+	<p>In 1906, Upton Sinclair released a book called <i>The Jungle</i> that showed the awful quality of life for immigrants and unskilled workers through a narative centered around a lithuanian family. This game uses actual occurences from the book to simulate living in that time, as an imigrant family.</p>
+	<h3>How to play</h3>
+	<p>First, you must make a family - Enter the names of as many family members as you like. You can choose where you want to live, and then each family member can try to get a job by taking their chances and choosing one card to overturn. After that, you are launched into the main game - you must click on one of the six different cards to see what happens to you. Every two choices you must pay for groceries for each family member, and you have a chance to choose a different dwelling.<br><br>This goes on until you run out of money, or everyone in your family is dead.</p>
+	<a href="game.html"><button>Play Game!</button></a>
 </body>
 </html>
