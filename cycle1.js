@@ -1,11 +1,17 @@
 function chooseCycleOne(element) {
-	let chosen = Math.floor(Math.random()*6);
+	let chosen = Math.floor(Math.random()*6);chosen=2;
 	let member;
 	let jobMembers = members.filter(person => person.job !== 0);
 	let string;
 	switch (chosen) {
 		case 0:
 			member = Math.floor(Math.random()*members.length);
+			if (members[member].jail) {
+				string = `"${members[member].name}" got sick in jail`;
+				updateStatus(string);
+				element.innerHTML = `<h3>${string}</h3><br><br>Press a button to see if they live:<br><button onClick="dontPayForDoctor(${JSON.stringify([member])}, this)">Take your Chances</button>`;
+				break;
+			}
 			let otherMember = false;
 			if (dwelling === "homeless") {
 				string = `"${members[member].name}" got sick, and because your family is homeless their condition escalated and they died`;
@@ -45,6 +51,15 @@ function chooseCycleOne(element) {
 			break;
 		case 2:
 			if (!jobMembers.length) {
+				let jailMembers = members.filter(person => person.jail);
+				if (jailMembers.length) {
+					let member = jailMembers[Math.floor(Math.random()*jailMembers.length)];
+					member.daysTillOut += 10;
+					let string = `"${member.name}" got their jail sentence increased to ${member.daysTillOut} cycles.`;
+					updateStatus(string);
+					element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+					return;
+				}
 				let string = `"${members[Math.floor(Math.random()*members.length)].name}" overslept today, but since they don't have a job it doesn't matter`;
 				updateStatus(string);
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;

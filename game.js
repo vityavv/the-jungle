@@ -251,6 +251,9 @@ function startCycle() {
 	});
 	cycle++;
 	house--;
+	members.forEach(person => {
+		if (person.daysTillOut) person.daysTillOut--;
+	});
 }
 function chooseCycle(element) {
 	Array.from(document.getElementsByClassName("cycle")).forEach(el => {el.style.visibility = "hidden"});
@@ -264,11 +267,14 @@ function chooseCycle(element) {
 	} else if (cycleType === 1) {
 		cycleType = 2;
 		chooseCycleTwo(element);
+	} else if (cycleType === 2) {
+		cycleType = 3;
+		chooseCycleThree(element);
 	}
 }
 function nextCycleChoose(element) {
 	startCycle();
-	if (cycleType === 2) {
+	if (cycleType === 3) {
 		let string = `You pay $${members.length * 2} for groceries for the ${members.length} ${members.length === 1 ? "member" : "members"} in your family.<br>`;
 		if (babies > 0) string += `You pay $${babies * 4} for formula and food for your ${babies} ${babies === 1 ? "baby" : "babies"}.`;
 		updateStatus(string);

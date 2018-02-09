@@ -5,6 +5,15 @@ function chooseCycleTwo(element) {
 	switch (chosen) {
 		case 0:
 			if (!jobMembers.length) {
+				let jailMembers = members.filter(person => person.jail);
+				if (jailMembers.length) {
+					let member = jailMembers[Math.floor(Math.random()*jailMembers.length)];
+					member.daysTillOut += 10;
+					let string = `"${member.name}" got their jail sentence increased to ${member.daysTillOut} cycles.`;
+					updateStatus(string);
+					element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+					return;
+				}
 				let string = `"${members[Math.floor(Math.random()*members.length)].name}" went out into the cold and froze up in the blizzard, but since they don't have a job they were dragged back home and thawed`;
 				updateStatus(string);
 				element.innerHTML = `<h3>${string}<br><br><button onClick="nextCycleChoose(this)">Next</button>`;
@@ -23,7 +32,7 @@ function chooseCycleTwo(element) {
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 			break;
 		case 2:
-			let jobLess = members.filter(person => person.job === 0 && person.canGetJob);
+			let jobLess = members.filter(person => person.job === 0 && person.canGetJob && !person.jail);
 			if (!jobLess.length) {
 				string = `A month passed and nothing happened! Yay!`;
 				updateStatus(string);
@@ -45,7 +54,7 @@ function chooseCycleTwo(element) {
 		case 4:
 			let memberIndex = Math.floor(Math.random()*members.length);
 			let number;
-			if (dwelling === "homeless") {
+			if (dwelling === "homeless" || members[memberIndex].jail) {
 				let string = `"${members[memberIndex].name}" turned depressed, and because of the state of your family they decided to end it all, and killed themselves`;
 				updateStatus(string);
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
@@ -70,7 +79,7 @@ function chooseCycleTwo(element) {
 			}
 			break;
 		case 5:
-			let canGetJobMembers = (jobMembers.length ? jobMembers : members.filter(person => person.canGetJob));
+			let canGetJobMembers = (jobMembers.length ? jobMembers : members.filter(person => person.canGetJob && !person.jail));
 			if (!canGetJobMembers.length) {
 				let memberIndex = Math.floor(Math.random()*members.length);
 				let string = `"${members[memberIndex].name}" fell into a pit, but because their hands were frostbitten they couldn't climb out. Nobody came to help them, their body froze, and they died`;
