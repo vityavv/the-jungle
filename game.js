@@ -49,8 +49,8 @@ let moneyStore = 700;
 Object.defineProperty(window, "money", {
 	get: () => moneyStore,
 	set: value => {
-		updateMoney();
 		moneyStore = value;
+		updateMoney();
 	}
 });
 let babyStore = 0;
