@@ -6,6 +6,8 @@ class Person {
 		this.name = name || "";
 		this.alcoholicStore = false;
 		this.canGetJobStore = true;
+		this.jailStore = false;
+		this.daysTillOutStore = 0;
 	}
 	get job() {
 		return this.jobStore;
@@ -27,6 +29,21 @@ class Person {
 	set canGetJob(value) {
 		this.canGetJobStore = value;
 		if (!value) this.job = 0;
+		updateFamily();
+	}
+	get jail() {
+		return this.jailStore;
+	}
+	set jail(value) {
+		this.jailStore = value;
+		updateFamily();
+	}
+	get daysTillOut() {
+		return this.daysTillOutStore;
+	}
+	set daysTillOut(value) {
+		this.daysTillOutStore = value;
+		if (this.daysTillOutStore <= 0) {this.jail = false}
 		updateFamily();
 	}
 }
@@ -278,6 +295,7 @@ function updateFamily() {
 		string += `"${person.name}" - Job: $${person.job}`;
 		if (person.alcoholic) string += " - Alcoholic";
 		if (!person.canGetJob) string += " - Permanently injured and can't get a job";
+		if (person.jail) string += ` - In jail, ${person.daysTillOut} ${person.daysTillOut === 1 ? "day" : "days"} until they're out.`
 		string += "<br>"
 	});
 	if (babies) string += babies + (babies === 1 ? " baby" : " babies");
