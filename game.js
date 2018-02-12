@@ -8,42 +8,44 @@ class Person {
 		this.canGetJobStore = true;
 		this.jailStore = false;
 		this.daysTillOutStore = 0;
+		this.strikerStore = false;
+		this.strikebreakerStore = false;
 	}
-	get job() {
-		return this.jobStore;
-	}
+	get job() {return this.jobStore;}
 	set job(value) {
 		this.jobStore = value;
 		updateFamily();
 	}
-	get alcoholic() {
-		return this.alcoholicStore;
-	}
+	get alcoholic() {return this.alcoholicStore;}
 	set alcoholic(value) {
 		this.alcoholicStore = value;
 		updateFamily();
 	}
-	get canGetJob() {
-		return this.canGetJobStore;
-	}
+	get canGetJob() {return this.canGetJobStore;}
 	set canGetJob(value) {
 		this.canGetJobStore = value;
 		if (!value) this.job = 0;
 		updateFamily();
 	}
-	get jail() {
-		return this.jailStore;
-	}
+	get jail() {return this.jailStore;}
 	set jail(value) {
 		this.jailStore = value;
 		updateFamily();
 	}
-	get daysTillOut() {
-		return this.daysTillOutStore;
-	}
+	get daysTillOut() {return this.daysTillOutStore;}
 	set daysTillOut(value) {
 		this.daysTillOutStore = value;
 		if (this.daysTillOutStore <= 0) {this.jail = false}
+		updateFamily();
+	}
+	get striker() {return this.strikerStore;}
+	set striker(value) {
+		this.strikerStore = value;
+		updateFamily();
+	}
+	get strikebreaker() {return this.strikebreakerStore}
+	set strikebreaker(value) {
+		this.strikebreakerStore = value;
 		updateFamily();
 	}
 }
