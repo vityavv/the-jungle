@@ -85,9 +85,15 @@ function chooseCycleOne(element) {
 				updateStatus(string);
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 			} else {
-				string = `The factory that "${member.name}" works at started a strike for higher wages!`;
-				updateStatus(string);
-				element.innerHTML = `<h3>${string}</h3><br><br><span><button onClick='strike(${members.indexOf(member)}, this)'>Quit your job and go on strike</button><button onClick='strikebreak(${members.indexOf(member)}, this)'>Go to work anyway</button></span>`;
+				if (member.job) {
+					string = `The factory that "${member.name}" works at started a strike for higher wages!`;
+					updateStatus(string);
+					element.innerHTML = `<h3>${string}</h3><br><br><span><button onClick='strike(${members.indexOf(member)}, this)'>Quit your job and go on strike</button><button onClick='strikebreak(${members.indexOf(member)}, this)'>Go to work anyway</button></span>`;
+				} else {
+					string = `A factory decided to go on strike and ${member.name} got a chance to break the strike and get a job there!`;
+					updateStatus(string);
+					element.innerHTML = `<h3>${string}</h3><br><br><span><button onClick='strike(${members.indexOf(member)}, this)'>Help the strikers</button><button onClick='strikebreak(${members.indexOf(member)}, this)'>Take the chance and go to work</button></span>`;
+				}
 			}
 			break;
 		case 4:
@@ -195,7 +201,8 @@ function strike(memberIndex, element) {
 function strikebreak(memberIndex, element) {
 	let member = members[memberIndex];
 	member.strikebreaker = true;
-	member.job = 6;
+	if (member.job > 6) member.job = 11;
+	else member.job = 6;
 	let string = `"${member.name}" became a strikebreaker and got higher wages because of the smaller workforce`;
 	let parent = element.parentNode;
 	parent.innerHTML = string;

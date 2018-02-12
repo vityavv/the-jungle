@@ -10,6 +10,7 @@ class Person {
 		this.daysTillOutStore = 0;
 		this.strikerStore = false;
 		this.strikebreakerStore = false;
+		this.druggieStore = false;
 	}
 	get job() {return this.jobStore;}
 	set job(value) {
@@ -46,6 +47,11 @@ class Person {
 	get strikebreaker() {return this.strikebreakerStore}
 	set strikebreaker(value) {
 		this.strikebreakerStore = value;
+		updateFamily();
+	}
+	get druggie() {return this.druggieStore}
+	set druggie(value) {
+		this.druggieStore = value;
 		updateFamily();
 	}
 }
@@ -117,7 +123,7 @@ function chooseDwelling(chosenDwelling) {
 			dwelling = "house";
 			house = 20;//this is a counting-down number---when it reaches 0 you stop paying
 			money -= 300;
-			updateStatus(`You pay $300 down for a new house! You have $${money} left`);
+			updateStatus(`You pay $300 down for a new house!`);
 			youHave = "You already live in a house. Choose an option below to change your dwelling or press skip to continue ";
 		} else {
 			alert("You don't have enough money for that!");//if you don't...
@@ -204,7 +210,7 @@ function bribe() {
 	money -= 20;//take away money
 	members[jobChooser].job *= 2;//double pay
 	document.getElementById("bribe").innerHTML = `Your job now earns you $${members[jobChooser].job}!`;//tell 'em
-	updateStatus(`"${members[jobChooser].name}" bribed the boss $20 to get double pay and earn $${members[jobChooser].job}! You have $${money} left`);
+	updateStatus(`"${members[jobChooser].name}" bribed the boss $20 to get double pay and earn $${members[jobChooser].job}!`);
 }
 function nextJobChoose(element) {
 	jobChooser++;//next jobChooser
@@ -237,19 +243,23 @@ function nextJobChoose(element) {
 function startCycle() {
 	members.filter(member => member.job).forEach(member => {
 		money += member.job;
-		updateStatus(`You earned $${member.job} from ${member.name}'s job. You now have $${money}.`);
+		updateStatus(`You earned $${member.job} from ${member.name}'s job.`);
 	});
 	if (house > 0) {
 		money -= 12;
-		updateStatus(`You spent $12 to pay off your house. You have $${money} left.`);
+		updateStatus(`You spent $12 to pay off your house.`);
 	}
 	if (dwelling === "rent") {
 		money -= 9;
-		updateStatus(`You spent $9 on rent. You have $${money} left.`);
+		updateStatus(`You spent $9 on rent.`);
 	}
 	members.filter(member => member.alcoholic).forEach(member => {
 		money--;
-		updateStatus(`You spent $1 on alcohol for "${member.name}". You have $${money} left.`);
+		updateStatus(`You spent $1 on alcohol for "${member.name}".`);
+	});
+	members.filter(member => member.druggie).forEach(member => {
+		money -= 2;
+		updateStatus(`You spent $2 on drugs for "${member.name}".`);
 	});
 	cycle++;
 	house--;
@@ -302,10 +312,11 @@ function updateFamily() {
 	members.forEach(person => {
 		string += `"${person.name}" - Job: $${person.job}`;
 		if (person.alcoholic) string += " - Alcoholic";
+		if (person.druggie) string += " - Addictied to drugs";
 		if (!person.canGetJob) string += " - Permanently injured and can't get a job";
 		if (person.jail) string += ` - In jail, ${person.daysTillOut} ${person.daysTillOut === 1 ? "day" : "days"} until they're out.`;
-		if (person.striker) string += ` - On strike`;
-		if (person.strikebreaker) string += ` - Breaking the strike`;
+		if (person.striker) string += " - On strike";
+		if (person.strikebreaker) string += " - Breaking the strike";
 		string += "<br>"
 	});
 	if (babies) string += babies + (babies === 1 ? " baby" : " babies");
