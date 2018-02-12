@@ -303,7 +303,9 @@ function updateFamily() {
 		string += `"${person.name}" - Job: $${person.job}`;
 		if (person.alcoholic) string += " - Alcoholic";
 		if (!person.canGetJob) string += " - Permanently injured and can't get a job";
-		if (person.jail) string += ` - In jail, ${person.daysTillOut} ${person.daysTillOut === 1 ? "day" : "days"} until they're out.`
+		if (person.jail) string += ` - In jail, ${person.daysTillOut} ${person.daysTillOut === 1 ? "day" : "days"} until they're out.`;
+		if (person.striker) string += ` - On strike`;
+		if (person.strikebreaker) string += ` - Breaking the strike`;
 		string += "<br>"
 	});
 	if (babies) string += babies + (babies === 1 ? " baby" : " babies");

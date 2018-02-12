@@ -20,5 +20,10 @@ function chooseCycleThree(element) {
 			updateStatus(string);
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 			break;
+		case 1:
+			string = `A month passed and nothing happened! Yay!`;
+			updateStatus(string);
+			element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+			break;
 	}
 }

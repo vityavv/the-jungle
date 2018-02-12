@@ -32,7 +32,7 @@ function chooseCycleTwo(element) {
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 			break;
 		case 2:
-			let jobLess = members.filter(person => person.job === 0 && person.canGetJob && !person.jail);
+			let jobLess = members.filter(person => person.job === 0 && person.canGetJob && !person.jail && !person.striker);
 			if (!jobLess.length) {
 				string = `A month passed and nothing happened! Yay!`;
 				updateStatus(string);

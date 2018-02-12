@@ -1,5 +1,5 @@
 function chooseCycleOne(element) {
-	let chosen = Math.floor(Math.random()*6);chosen=2;
+	let chosen = Math.floor(Math.random()*6);chosen=3;
 	let member;
 	let jobMembers = members.filter(person => person.job !== 0);
 	let string;
@@ -71,9 +71,24 @@ function chooseCycleOne(element) {
 			element.innerHTML = `<h3>${string}</h3><br><br><span><button onClick='bribeToKeepJob(this)'>Bribe the boss to keep the job - $10</button><br><br><button onClick='oversleptChances(this, ${members.indexOf(member)})'>Try returning to your job</button></span>`;
 			break;
 		case 3:
-			string = `A month passed and nothing happened! Yay!`;
-			updateStatus(string);
-			element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+			member = members[Math.floor(Math.random()*members.length)];
+			if (member.striker) {
+				member.striker = false;
+				member.job = 6;
+				string = `The strike at "${member.name}"'s factory ended and they got their job back, PLUS extra wages!`;
+				updateStatus(string);
+				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
+			} else if (member.strikebreaker) {
+				member.strikebreaker = false;
+				member.job = 0;
+				string = `The strike at "${member.name}"'s factory ended and because they were a strikebreaker their job was replaced by a union member`;
+				updateStatus(string);
+				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
+			} else {
+				string = `The factory that "${member.name}" works at started a strike for higher wages!`;
+				updateStatus(string);
+				element.innerHTML = `<h3>${string}</h3><br><br><span><button onClick='strike(${members.indexOf(member)}, this)'>Quit your job and go on strike</button><button onClick='strikebreak(${members.indexOf(member)}, this)'>Go to work anyway</button></span>`;
+			}
 			break;
 		case 4:
 			let drys = members.filter(person => !person.alcoholic);
@@ -166,4 +181,23 @@ function oversleptChances(element, memberIndex) {
 		parent.innerHTML = string;
 		parent.parentNode.innerHTML += "<br><br><button onClick='nextCycleChoose(this)'>Next</button>";
 	}
+}
+function strike(memberIndex, element) {
+	let member = members[memberIndex];
+	member.striker = true;
+	member.job = 0;
+	let string = `"${member.name}" became a striker and lost their job`;
+	updateStatus(string);
+	let parent = element.parentNode;
+	parent.innerHTML = string;
+	parent.parentNode.innerHTML += "<br><br><button onClick='nextCycleChoose(this)'>Next</button>";
+}
+function strikebreak(memberIndex, element) {
+	let member = members[memberIndex];
+	member.strikebreaker = true;
+	member.job = 6;
+	let string = `"${member.name}" became a strikebreaker and got higher wages because of the smaller workforce`;
+	let parent = element.parentNode;
+	parent.innerHTML = string;
+	parent.parentNode.innerHTML += "<br><br><button onClick='nextCycleChoose(this)'>Next</button>";
 }
