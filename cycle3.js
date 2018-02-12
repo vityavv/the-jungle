@@ -47,5 +47,37 @@ function chooseCycleThree(element) {
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 			}
 			break;
+		case 3:
+			member = Math.floor(Math.random()*members.length);
+			if (members[member].jail) {
+				string = `"${members[member].name}" got sick in jail`;
+				updateStatus(string);
+				element.innerHTML = `<h3>${string}</h3><br><br>Press a button to see if they live:<br><button onClick="dontPayForDoctor(${JSON.stringify([member])}, this)">Take your Chances</button>`;
+				break;
+			}
+			let otherMember = false;
+			if (dwelling === "homeless") {
+				string = `"${members[member].name}" got sick, and because your family is homeless their condition escalated and they died`;
+				updateStatus(string);
+				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
+				members.splice(member, 1);
+				updateFamily();
+				return
+			} else if (dwelling === "rent") {
+				string = "";
+				if (members.length > 1) {
+					otherMember = Math.floor(Math.random()*(members.length-1));
+					if (member === otherMember) otherMember = members.length-1;
+					string = `"${members[member].name}" got sick, and because you rent a very small room their condition spread to "${members[otherMember].name}"`;
+				} else {
+					string = `"${members[member].name}" got sick`;
+				}
+			} else {
+				string = `"${members[member].name}" got sick`;
+			}
+			updateStatus(string);
+			let array = otherMember ? [member, otherMember] : [member];
+			element.innerHTML = `<h3>${string}</h3><br><br>Press a button to see if they live:<br><button onClick="payForDoctor(${JSON.stringify(array)}, this)">Pay for a doctor - $10</button><br><button onClick="dontPayForDoctor(${JSON.stringify(array)}, this)">Take your Chances</button>`;
+			break;
 	}
 }
