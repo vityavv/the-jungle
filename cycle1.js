@@ -1,5 +1,5 @@
 function chooseCycleOne(element) {
-	let chosen = Math.floor(Math.random()*6);chosen=3;
+	let chosen = Math.floor(Math.random()*6);
 	let member;
 	let jobMembers = members.filter(person => person.job !== 0);
 	let string;

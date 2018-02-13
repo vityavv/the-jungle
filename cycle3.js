@@ -1,5 +1,5 @@
 function chooseCycleThree(element) {
-	let chosen = Math.floor(Math.random()*6);chosen=5;
+	let chosen = Math.floor(Math.random()*6);
 	let member, stringl
 	switch (chosen) {
 		case 0:
