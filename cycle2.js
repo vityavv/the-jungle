@@ -91,7 +91,7 @@ function chooseCycleTwo(element) {
 			}
 			member = canGetJobMembers[Math.floor(Math.random()*canGetJobMembers.length)];
 			member.canGetJob = false;
-			string = `"${member.name}" went out into the cold and their hands got frostbite. They can't return to their job, and they can never get a job again`;
+			string = `"${member.name}" went out into the cold and their hands got frostbite. They can't return to their job, nobody will hire them like this`;
 			updateStatus(string);
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 			break;

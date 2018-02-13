@@ -1,5 +1,5 @@
 function chooseCycleThree(element) {
-	let chosen = Math.floor(Math.random()*6);chosen=4;
+	let chosen = Math.floor(Math.random()*6);chosen=5;
 	let member, stringl
 	switch (chosen) {
 		case 0:
@@ -91,6 +91,20 @@ function chooseCycleThree(element) {
 			money += 10;
 			updateStatus(string);
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
+			break;
+		case 5:
+			let cantGetJob = members.filter(person => !person.canGetJob && !person.jail);
+			if (cantGetJob.length) {
+				let member = cantGetJob[Math.floor(Math.random()*cantGetJob.length)];
+				member.canGetJob = true;
+				let string = `Someone sees "${member.name}" out in the street and takes pity on their injuries, so they take them to the hospital and get them fixed up.`;
+				updateStatus(string);
+				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
+				return;
+			}
+			let stringy = `Someone sees "${members[Math.floor(Math.random()*members.length)].name}", takes pity on them, and takes them out to dinner`;
+			updateStatus(stringy);
+			element.innerHTML = `<h3>${stringy}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 			break;
 	}
 }

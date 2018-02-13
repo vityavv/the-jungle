@@ -96,7 +96,7 @@ function chooseCycleOne(element) {
 				} else {
 					string = `A factory decided to go on strike`;
 					if (member.canGetJob) string +=  ` and ${member.name} got a chance to break the strike and get a job there!`;
-					else string += ` near ${member.name} and they were invited to join!`;
+					else string += ` near "${member.name}" and they were invited to join!`;
 					updateStatus(string);
 					if (member.canGetJob) {
 						element.innerHTML = `<h3>${string}</h3><br><br><span><button onClick='strike(${members.indexOf(member)}, this)'>Help the strikers</button><button onClick='strikebreak(${members.indexOf(member)}, this)'>Take the chance and go to work</button></span>`;
