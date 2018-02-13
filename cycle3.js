@@ -1,5 +1,5 @@
 function chooseCycleThree(element) {
-	let chosen = Math.floor(Math.random()*6);chosen=2;
+	let chosen = Math.floor(Math.random()*6);chosen=4;
 	let member, stringl
 	switch (chosen) {
 		case 0:
@@ -78,6 +78,19 @@ function chooseCycleThree(element) {
 			updateStatus(string);
 			let array = otherMember ? [member, otherMember] : [member];
 			element.innerHTML = `<h3>${string}</h3><br><br>Press a button to see if they live:<br><button onClick="payForDoctor(${JSON.stringify(array)}, this)">Pay for a doctor - $10</button><br><button onClick="dontPayForDoctor(${JSON.stringify(array)}, this)">Take your Chances</button>`;
+			break;
+		case 4:
+			if (babies) {
+				let string = `One of your family's infants died of sickness.`;
+				babies--;
+				updateStatus(string);
+				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
+				return;
+			}
+			let string = `"${members[Math.floor(Math.random()*members.length)].name}" chances upon a $10 bill outside and brings it home to your family`;
+			money += 10;
+			updateStatus(string);
+			element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 			break;
 	}
 }

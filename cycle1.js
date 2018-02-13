@@ -74,8 +74,12 @@ function chooseCycleOne(element) {
 			member = members[Math.floor(Math.random()*members.length)];
 			if (member.striker) {
 				member.striker = false;
-				member.job = 6;
-				string = `The strike at "${member.name}"'s factory ended and they got their job back, PLUS extra wages!`;
+				if (member.canGetJob) {
+					member.job = 6;
+					string = `The strike at "${member.name}"'s factory ended and they got their job back, PLUS extra wages!`;
+				} else {
+					string = `The strike at "${member.name}"'s factory ended`;
+				}
 				updateStatus(string);
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 			} else if (member.strikebreaker) {
@@ -90,9 +94,15 @@ function chooseCycleOne(element) {
 					updateStatus(string);
 					element.innerHTML = `<h3>${string}</h3><br><br><span><button onClick='strike(${members.indexOf(member)}, this)'>Quit your job and go on strike</button><button onClick='strikebreak(${members.indexOf(member)}, this)'>Go to work anyway</button></span>`;
 				} else {
-					string = `A factory decided to go on strike and ${member.name} got a chance to break the strike and get a job there!`;
+					string = `A factory decided to go on strike`;
+					if (member.canGetJob) string +=  ` and ${member.name} got a chance to break the strike and get a job there!`;
+					else string += ` near ${member.name} and they were invited to join!`;
 					updateStatus(string);
-					element.innerHTML = `<h3>${string}</h3><br><br><span><button onClick='strike(${members.indexOf(member)}, this)'>Help the strikers</button><button onClick='strikebreak(${members.indexOf(member)}, this)'>Take the chance and go to work</button></span>`;
+					if (member.canGetJob) {
+						element.innerHTML = `<h3>${string}</h3><br><br><span><button onClick='strike(${members.indexOf(member)}, this)'>Help the strikers</button><button onClick='strikebreak(${members.indexOf(member)}, this)'>Take the chance and go to work</button></span>`;
+					} else {
+						element.innerHTML = `<h3>${string}</h3><br><br><span><button onClick='strike(${members.indexOf(member)}, this)'>Help the strikers</button></span>`;
+					}
 				}
 			}
 			break;
@@ -191,8 +201,9 @@ function oversleptChances(element, memberIndex) {
 function strike(memberIndex, element) {
 	let member = members[memberIndex];
 	member.striker = true;
+	let string = `"${member.name}" became a striker`;
+	if (member.job) string += ` and lost their job`;
 	member.job = 0;
-	let string = `"${member.name}" became a striker and lost their job`;
 	updateStatus(string);
 	let parent = element.parentNode;
 	parent.innerHTML = string;
