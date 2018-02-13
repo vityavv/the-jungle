@@ -102,7 +102,7 @@ function chooseCycleThree(element) {
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 				return;
 			}
-			let string = `Someone sees "${members[Math.floor(Math.random()*members.length)].name}", takes pity on them, and takes them out to dinner`;
+			string = `Someone sees "${members[Math.floor(Math.random()*members.length)].name}", takes pity on them, and takes them out to dinner`;
 			updateStatus(string);
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 			break;
