@@ -323,6 +323,7 @@ function updateFamily() {
 	if (members.length === 0) {
 		Array.from(document.getElementsByClassName("hide")).forEach(el => {el.style.display = "none"});
 		document.getElementById("loseDie").style.display = "block";
+		setTimeout(() => {document.getElementById("laststatus").innerHTML = document.querySelector(".status").innerHTML}, 100);//quick and dirty fix
 	}
 	document.getElementById("familyDisplay").innerHTML = string;
 	document.getElementById("familyTitle").style.display = "block";
@@ -331,6 +332,7 @@ function updateMoney() {
 	if (money <= 0) {
 		Array.from(document.getElementsByClassName("hide")).forEach(el => {el.style.display = "none"});
 		document.getElementById("loseMoney").style.display = "block";
+		setTimeout(() => {document.getElementById("laststatustwo").innerHTML = document.querySelector(".status").innerHTML}, 100);//quick and dirty fix
 	}
 	document.getElementById("money").innerHTML = money;
 }

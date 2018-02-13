@@ -1,6 +1,6 @@
 function chooseCycleThree(element) {
 	let chosen = Math.floor(Math.random()*6);
-	let member, stringl
+	let member, string = "";
 	switch (chosen) {
 		case 0:
 			let freeMembers = members.filter(person => !person.jail);
@@ -42,7 +42,7 @@ function chooseCycleThree(element) {
 				}
 			} else {
 				member.druggie = true;
-				string = `"${member.name}" stumbled upon a drug den and got drawn inside. They were compelled by the pull of drugs and got addictied.`;
+				let string = `"${member.name}" stumbled upon a drug den and got drawn inside. They were compelled by the pull of drugs and got addictied.`;
 				updateStatus(string);
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 			}
@@ -87,7 +87,7 @@ function chooseCycleThree(element) {
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 				return;
 			}
-			let string = `"${members[Math.floor(Math.random()*members.length)].name}" chances upon a $10 bill outside and brings it home to your family`;
+			string = `"${members[Math.floor(Math.random()*members.length)].name}" chances upon a $10 bill outside and brings it home to your family`;
 			money += 10;
 			updateStatus(string);
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
@@ -102,9 +102,9 @@ function chooseCycleThree(element) {
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 				return;
 			}
-			let stringy = `Someone sees "${members[Math.floor(Math.random()*members.length)].name}", takes pity on them, and takes them out to dinner`;
-			updateStatus(stringy);
-			element.innerHTML = `<h3>${stringy}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
+			let string = `Someone sees "${members[Math.floor(Math.random()*members.length)].name}", takes pity on them, and takes them out to dinner`;
+			updateStatus(string);
+			element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 			break;
 	}
 }
