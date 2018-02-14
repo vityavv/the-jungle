@@ -119,6 +119,7 @@ function startGame() {//Start the game
 function chooseDwelling(chosenDwelling) {
 	let youHave = "";
 	if (chosenDwelling === "house") {
+		if (dwelling === "house") return;
 		if (money >= 300) {//make sure you have enough money
 			dwelling = "house";
 			house = 20;//this is a counting-down number---when it reaches 0 you stop paying

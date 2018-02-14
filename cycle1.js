@@ -19,7 +19,7 @@ function chooseCycleOne(element) {
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 				members.splice(member, 1);
 				updateFamily();
-				return
+				return;
 			} else if (dwelling === "rent") {
 				string = "";
 				if (members.length > 1) {
