@@ -243,7 +243,7 @@ function nextJobChoose(element) {
 function startCycle() {
 	members.filter(member => member.job).forEach(member => {
 		money += member.job;
-		updateStatus(`You earned $${member.job} from ${member.name}'s job.`);
+		updateStatus(`You earned $${member.job} from "${member.name}"'s job.`);
 	});
 	if (house > 0) {
 		money -= 12;

@@ -35,13 +35,11 @@ function chooseCycleTwo(element) {
 			let jobLess = members.filter(person => person.job === 0 && person.canGetJob && !person.jail && !person.striker);
 			if (!jobLess.length) {
 				string = `A month passed and nothing happened! Yay!`;
-				updateStatus(string);
-				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
-				return;
+			} else {
+				member = jobLess[Math.floor(Math.random()*jobLess.length)];
+				member.job = 2;
+				string = `"${member.name}" gets a job and it pays them two dollars!`;
 			}
-			member = jobLess[Math.floor(Math.random()*jobLess.length)];
-			member.job = 2;
-			string = `"${member.name}" gets a job and it pays them two dollars!`;
 			updateStatus(string);
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 			break;
@@ -55,43 +53,38 @@ function chooseCycleTwo(element) {
 			let memberIndex = Math.floor(Math.random()*members.length);
 			let number;
 			if (dwelling === "homeless" || members[memberIndex].jail) {
-				let string = `"${members[memberIndex].name}" turned depressed, and because of the state of your family they decided to end it all, and killed themselves`;
-				updateStatus(string);
-				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
-				members.splice(memberIndex, 1);
-				updateFamily();
-				return;
-			} else if (dwelling === "rent") number = 0.5;
-			else if (dwelling === "house") number = 0.3;
-			if (Math.random() < number) {
-				let string = `"${members[memberIndex].name}" turned depressed, and because of the state of your family they decided to end it all, and killed themselves`;
-				updateStatus(string);
-				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
+				string = `"${members[memberIndex].name}" turned depressed, and because of the state of your family they decided to end it all, and killed themselves`;
 				members.splice(memberIndex, 1);
 				updateFamily();
 			} else {
-				if (members[memberIndex].job) {
-					string = `"${members[memberIndex].name}" turned depressed, decided to go to the salon, and spent his week's pay on drink`;
-					money -= members[memberIndex].job;
-				} else string = `"${members[memberIndex].name}" turned depressed, but they had nothing to lose so they pulled themselves together`;
-				updateStatus(string);
-				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
+				if (dwelling === "rent") number = 0.5;
+				else if (dwelling === "house") number = 0.3;
+				if (Math.random() < number) {
+					string = `"${members[memberIndex].name}" turned depressed, and because of the state of your family they decided to end it all, and killed themselves`;
+					members.splice(memberIndex, 1);
+					updateFamily();
+				} else {
+					if (members[memberIndex].job) {
+						string = `"${members[memberIndex].name}" turned depressed, decided to go to the salon, and spent his week's pay on drink`;
+						money -= members[memberIndex].job;
+					} else string = `"${members[memberIndex].name}" turned depressed, but they had nothing to lose so they pulled themselves together`;
+				}
 			}
+			updateStatus(string);
+			element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 			break;
 		case 5:
 			let canGetJobMembers = (jobMembers.length ? jobMembers : members.filter(person => person.canGetJob && !person.jail));
 			if (!canGetJobMembers.length) {
 				let memberIndex = Math.floor(Math.random()*members.length);
-				let string = `"${members[memberIndex].name}" fell into a pit, but because their hands were frostbitten they couldn't climb out. Nobody came to help them, their body froze, and they died`;
-				updateStatus(string);
-				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextJobChoose(this)">Next</button>`;
+				string = `"${members[memberIndex].name}" fell into a pit, but because their hands were frostbitten they couldn't climb out. Nobody came to help them, their body froze, and they died`;
 				members.splice(memberIndex, 1);
-				updateFamily()
-				return;
+				updateFamily();
+			} else {
+				member = canGetJobMembers[Math.floor(Math.random()*canGetJobMembers.length)];
+				member.canGetJob = false;
+				string = `"${member.name}" went out into the cold and their hands got frostbite. They can't return to their job, nobody will hire them like this`;
 			}
-			member = canGetJobMembers[Math.floor(Math.random()*canGetJobMembers.length)];
-			member.canGetJob = false;
-			string = `"${member.name}" went out into the cold and their hands got frostbite. They can't return to their job, nobody will hire them like this`;
 			updateStatus(string);
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 			break;

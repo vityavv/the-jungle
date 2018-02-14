@@ -7,16 +7,14 @@ function chooseCycleThree(element) {
 			if (!freeMembers.length) {
 				let member = members[Math.floor(Math.random()*members.length)];
 				member.daysTillOut += 10;
-				let string = `"${member.name}" got their jail sentence increased to ${member.daysTillOut} cycles.`;
-				updateStatus(string);
-				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
-				return;
+				string = `"${member.name}" got their jail sentence increased to ${member.daysTillOut} cycles.`;
+			} else {
+				member = freeMembers[Math.floor(Math.random()*freeMembers.length)];
+				member.jail = true;
+				member.daysTillOut = 10;
+				member.job = 0;
+				string = `"${member.name}" got into jail for 10 days and lost their job`;
 			}
-			member = freeMembers[Math.floor(Math.random()*freeMembers.length)];
-			member.jail = true;
-			member.daysTillOut = 10;
-			member.job = 0;
-			string = `"${member.name}" got into jail for 10 days and lost their job`;
 			updateStatus(string);
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 			break;
@@ -32,20 +30,16 @@ function chooseCycleThree(element) {
 					string = `"${member.name}" showed up to their job under the influence of drugs, didn't get payed, and got their wages cut in half as punishment`;
 					money -= member.job;
 					member.job /= 2;
-					updateStatus(string);
-					element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 				} else {
 					string = `"${member.name}" went to the drug den and spent $5 to escape their sorrow`;
 					money -= 5;
-					updateStatus(string);
-					element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 				}
 			} else {
 				member.druggie = true;
-				let string = `"${member.name}" stumbled upon a drug den and got drawn inside. They were compelled by the pull of drugs and got addictied.`;
-				updateStatus(string);
-				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+				string = `"${member.name}" stumbled upon a drug den and got drawn inside. They were compelled by the pull of drugs and got addictied.`;
 			}
+			updateStatus(string);
+			element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 			break;
 		case 3:
 			member = Math.floor(Math.random()*members.length);
@@ -62,7 +56,7 @@ function chooseCycleThree(element) {
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 				members.splice(member, 1);
 				updateFamily();
-				return
+				return;
 			} else if (dwelling === "rent") {
 				string = "";
 				if (members.length > 1) {
@@ -81,14 +75,14 @@ function chooseCycleThree(element) {
 			break;
 		case 4:
 			if (babies) {
-				let string = `One of your family's infants died of sickness.`;
+				string = `One of your family's infants died of sickness.`;
 				babies--;
 				updateStatus(string);
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
-				return;
+			} else {
+				string = `"${members[Math.floor(Math.random()*members.length)].name}" chances upon a $10 bill outside and brings it home to your family`;
+				money += 10;
 			}
-			string = `"${members[Math.floor(Math.random()*members.length)].name}" chances upon a $10 bill outside and brings it home to your family`;
-			money += 10;
 			updateStatus(string);
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 			break;
@@ -97,12 +91,10 @@ function chooseCycleThree(element) {
 			if (cantGetJob.length) {
 				let member = cantGetJob[Math.floor(Math.random()*cantGetJob.length)];
 				member.canGetJob = true;
-				let string = `Someone sees "${member.name}" out in the street and takes pity on their injuries, so they take them to the hospital and get them fixed up.`;
-				updateStatus(string);
-				element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
-				return;
+				string = `Someone sees "${member.name}" out in the street and takes pity on their injuries, so they take them to the hospital and get them fixed up.`;
+			} else {
+				string = `Someone sees "${members[Math.floor(Math.random()*members.length)].name}", takes pity on them, and takes them out to dinner`;
 			}
-			string = `Someone sees "${members[Math.floor(Math.random()*members.length)].name}", takes pity on them, and takes them out to dinner`;
 			updateStatus(string);
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick="nextCycleChoose(this)">Next</button>`;
 			break;

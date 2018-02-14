@@ -37,15 +37,12 @@ function chooseCycleOne(element) {
 			element.innerHTML = `<h3>${string}</h3><br><br>Press a button to see if they live:<br><button onClick="payForDoctor(${JSON.stringify(array)}, this)">Pay for a doctor - $10</button><br><button onClick="dontPayForDoctor(${JSON.stringify(array)}, this)">Take your Chances</button>`;
 			break;
 		case 1:
-			if (!jobMembers.length) {
-				let string = "The companies were downsizing today, but since nobody has a job in your family, you were untouched"
-				updateStatus(string);
-				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
-				return;
+			if (!jobMembers.length) string = "The companies were downsizing today, but since nobody has a job in your family, you were untouched";
+			else {
+				member = jobMembers[Math.floor(Math.random()*jobMembers.length)];
+				member.job = 0;
+				string = `"${member.name}" lost their job.`;
 			}
-			member = jobMembers[Math.floor(Math.random()*jobMembers.length)];
-			member.job = 0;
-			string = `"${member.name}" lost their job.`;
 			updateStatus(string);
 			element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 			break;
@@ -55,12 +52,8 @@ function chooseCycleOne(element) {
 				if (jailMembers.length) {
 					let member = jailMembers[Math.floor(Math.random()*jailMembers.length)];
 					member.daysTillOut += 10;
-					let string = `"${member.name}" got their jail sentence increased to ${member.daysTillOut} cycles.`;
-					updateStatus(string);
-					element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
-					return;
-				}
-				let string = `"${members[Math.floor(Math.random()*members.length)].name}" overslept today, but since they don't have a job it doesn't matter`;
+					string = `"${member.name}" got their jail sentence increased to ${member.daysTillOut} cycles.`;
+				} else string = `"${members[Math.floor(Math.random()*members.length)].name}" overslept today, but since they don't have a job it doesn't matter`;
 				updateStatus(string);
 				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 				return;
@@ -111,28 +104,22 @@ function chooseCycleOne(element) {
 			if (drys.length) {
 				let member = drys[Math.floor(Math.random()*drys.length)];
 				member.alcoholic = true;
-				let string = `"${member.name}" fell victim to alcohol and is now an alcoholic, so they must pay $1 every month`;
-				updateStatus(string);
-				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
+				string = `"${member.name}" fell victim to alcohol and is now an alcoholic, so they must pay $1 every month`;
 			} else {
-				let string = `"${members[Math.floor(Math.random()*members.length)].name}" went on a drinking spree and spent a dollar on drinks.`;
+				string = `"${members[Math.floor(Math.random()*members.length)].name}" went on a drinking spree and spent a dollar on drinks.`;
 				money -= 1;
-				updateStatus(string);
-				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 			}
+			updateStatus(string);
+			element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 			break;
 		case 5:
 			if (jobMembers.length) {
 				let member = jobMembers[Math.floor(Math.random()*jobMembers.length)];
-				let string = `"${member.name}" went out into the cold and their hands froze off. Their pay got cut in half as a punishment.`;
+				string = `"${member.name}" went out into the cold and their hands froze off. Their pay got cut in half as a punishment.`;
 				member.job /= 2;
-				updateStatus(string);
-				element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
-			} else {
-				let string = `"${members[Math.floor(Math.random()*members.length)].name}" went out into the cold and their hands froze off. However, since they don't have a job, they just came back inside and thawed their hands.`;
-				updateStatus(string);
-				element.innerHTML = `<h3>${string}</h3><br><button onClick='nextCycleChoose(this)'>Next</button>`;
-			}
+			} else string = `"${members[Math.floor(Math.random()*members.length)].name}" went out into the cold and their hands froze off. However, since they don't have a job, they just came back inside and thawed their hands.`;
+			updateStatus(string);
+			element.innerHTML = `<h3>${string}</h3><br><br><button onClick='nextCycleChoose(this)'>Next</button>`;
 			break;
 	}
 }
