@@ -119,16 +119,17 @@ function startGame() {//Start the game
 function chooseDwelling(chosenDwelling) {
 	let youHave = "";
 	if (chosenDwelling === "house") {
-		if (dwelling === "house") return;
-		if (money >= 300) {//make sure you have enough money
-			dwelling = "house";
-			house = 20;//this is a counting-down number---when it reaches 0 you stop paying
-			money -= 300;
-			updateStatus(`You pay $300 down for a new house!`);
-			youHave = "You already live in a house. Choose an option below to change your dwelling or press skip to continue ";
-		} else {
-			alert("You don't have enough money for that!");//if you don't...
-			return;
+		if (dwelling !== "house") {
+			if (money >= 300) {//make sure you have enough money
+				dwelling = "house";
+				house = 20;//this is a counting-down number---when it reaches 0 you stop paying
+				money -= 300;
+				updateStatus(`You pay $300 down for a new house!`);
+				youHave = "You already live in a house. Choose an option below to change your dwelling or press skip to continue ";
+			} else {
+				alert("You don't have enough money for that!");//if you don't...
+				return;
+			}
 		}
 	} else if (chosenDwelling === "rent") {
 		dwelling = "rent";
