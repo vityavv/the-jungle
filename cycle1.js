@@ -67,7 +67,7 @@ function chooseCycleOne(element) {
 			member = members[Math.floor(Math.random()*members.length)];
 			if (member.striker) {
 				member.striker = false;
-				if (member.canGetJob) {
+				if (member.canGetJob && !member.jail) {
 					member.job = 6;
 					string = `The strike at "${member.name}"'s factory ended and they got their job back, PLUS extra wages!`;
 				} else {
@@ -88,7 +88,7 @@ function chooseCycleOne(element) {
 					element.innerHTML = `<h3>${string}</h3><br><br><span><button onClick='strike(${members.indexOf(member)}, this)'>Quit your job and go on strike</button><button onClick='strikebreak(${members.indexOf(member)}, this)'>Go to work anyway</button></span>`;
 				} else {
 					string = `A factory decided to go on strike`;
-					if (member.canGetJob) string +=  ` and ${member.name} got a chance to break the strike and get a job there!`;
+					if (member.canGetJob && !member.jail) string +=  ` and ${member.name} got a chance to break the strike and get a job there!`;
 					else string += ` near "${member.name}" and they were invited to join!`;
 					updateStatus(string);
 					if (member.canGetJob) {
